@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Busylight integration test page</title>
+    <script src="busylight-lib.js"></script>
+</head>
+<body>
+<script>
+    window.onload = function () {
+        window.busylight = ThuliumBusylight.setup().onLibReady(function () {
+            console.log('Lib ready, ver: ' + busylight.getHostAppVersion())
+            busylight.color('#ff0000');
+            busylight.alert('#ff0000', ThuliumBusylight.sounds.Funky, 100);
+        }).onError(function (error) {
+            console.error("BL:", error);
+        });
+    };
+</script>
+</body>
+</html>

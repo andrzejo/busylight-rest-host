@@ -1,0 +1,13 @@
+E:\bl-dotnet\bl-host\bl-host-tests\bin\Debug\bl_host_unit.dll
+E:\bl-dotnet\bl-host\bl-host-tests\bin\Debug\bl_host_unit.pdb
+E:\bl-dotnet\bl-host\bl-host-tests\bin\Debug\nunit.framework.dll
+E:\bl-dotnet\bl-host\bl-host-tests\bin\Debug\nunit.framework.xml
+E:\bl-dotnet\bl-host\bl-host-tests\obj\Debug\bl-host-tests.csprojAssemblyReference.cache
+E:\bl-dotnet\bl-host\bl-host-tests\obj\Debug\bl-host-tests.csproj.CoreCompileInputs.cache
+E:\bl-dotnet\bl-host\bl-host-tests\obj\Debug\bl-host-tests.csproj.CopyComplete
+E:\bl-dotnet\bl-host\bl-host-tests\obj\Debug\bl_host_unit.dll
+E:\bl-dotnet\bl-host\bl-host-tests\obj\Debug\bl_host_unit.pdb
+E:\bl-dotnet\bl-host\bl-host-tests\bin\Debug\bl_host.exe
+E:\bl-dotnet\bl-host\bl-host-tests\bin\Debug\BusylightSDK.dll
+E:\bl-dotnet\bl-host\bl-host-tests\bin\Debug\bl_host.pdb
+E:\bl-dotnet\bl-host\bl-host-tests\bin\Debug\bl_host.exe.config
