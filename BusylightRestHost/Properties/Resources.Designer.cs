@@ -45,7 +45,7 @@ namespace BusylightRestHost.Properties
                 if ((resourceMan == null))
                 {
                     global::System.Resources.ResourceManager temp =
-                        new global::System.Resources.ResourceManager("bl_host.Properties.Resources",
+                        new global::System.Resources.ResourceManager("BusylightRestHost.Properties.Resources",
                             typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
