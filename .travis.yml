@@ -8,7 +8,7 @@ install:
 script:
 - msbuild BusylightRestHost.Tests/BusylightRestHost.Tests.csproj
 - mono packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe BusylightRestHost.Tests/BusylightRestHost.Tests.csproj
-  msbuild /p:Configuration=Release BusylightRestHost.sln /p:TargetFrameworkVersion=v4.7 /target:BusylightRestHost
+- msbuild /p:Configuration=Release BusylightRestHost.sln /p:TargetFrameworkVersion=v4.7 /target:BusylightRestHost
 - sha1sum BusylightRestHost/bin/Release/BusylightRestHost.exe > BusylightRestHost/bin/Release/BusylightRestHost.exe.sha1
   
 deploy:
