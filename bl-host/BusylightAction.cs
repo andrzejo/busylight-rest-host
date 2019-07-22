@@ -59,6 +59,7 @@ namespace bl_host
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
             }
 
             return BusylightColor.Off;

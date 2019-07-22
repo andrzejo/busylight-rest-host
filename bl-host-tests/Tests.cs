@@ -1,11 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Json;
 using bl_host;
 using Busylight;
 using NUnit.Framework;
 
-namespace bl_host_tests
+namespace bl_host_unit
 {
     [TestFixture]
     public class Tests
