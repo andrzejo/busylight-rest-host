@@ -7,7 +7,7 @@ using System.Runtime.Serialization.Json;
 using System.Text.RegularExpressions;
 using Busylight;
 
-namespace bl_host
+namespace BusylightRestHost
 {
     [DataContract]
     public class BusylightAction

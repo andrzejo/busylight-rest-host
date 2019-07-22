@@ -1,4 +1,4 @@
-﻿namespace bl_host
+﻿namespace BusylightRestHost
 {
     partial class Form1
     {

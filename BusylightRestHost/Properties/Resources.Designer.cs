@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace bl_host.Properties
+namespace BusylightRestHost.Properties
 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.

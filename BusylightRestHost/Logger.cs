@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace bl_host
+namespace BusylightRestHost
 {
     public class Logger
     {

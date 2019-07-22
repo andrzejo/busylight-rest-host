@@ -2,7 +2,7 @@ using System.Reflection;
 using Unosquare.Labs.EmbedIO;
 using Unosquare.Labs.EmbedIO.Modules;
 
-namespace bl_host
+namespace BusylightRestHost
 {
     public class HttpServer
     {

@@ -4,7 +4,7 @@ using Unosquare.Labs.EmbedIO;
 using Unosquare.Labs.EmbedIO.Constants;
 using Unosquare.Labs.EmbedIO.Modules;
 
-namespace bl_host
+namespace BusylightRestHost
 {
     public class BusylightController : WebApiController
     {

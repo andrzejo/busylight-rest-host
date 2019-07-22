@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace bl_host
+namespace BusylightRestHost
 {
     public partial class Form1 : Form
     {

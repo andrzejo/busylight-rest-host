@@ -1,9 +1,10 @@
 ﻿using System;
-using bl_host;
+
+using BusylightRestHost;
 using Busylight;
 using NUnit.Framework;
 
-namespace bl_host_unit
+namespace BusylightRestHostUnit
 {
     [TestFixture]
     public class Tests

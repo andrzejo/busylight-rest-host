@@ -117,8 +117,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BusylightSDK.dll" />
-    <Content Include="BusylightSDK.tlb" />
+    <Content Include="..\BusylightSdk\BusylightSDK.dll">
+      <Link>BusylightSDK.dll</Link>
+    </Content>
+    <Content Include="..\BusylightSdk\BusylightSDK.tlb">
+      <Link>BusylightSDK.tlb</Link>
+    </Content>
     <Content Include="ILRepack.Config.props" />
     <Content Include="ILRepack.targets" />
     <Content Include="web-sdk\sdk-test-site.html" />

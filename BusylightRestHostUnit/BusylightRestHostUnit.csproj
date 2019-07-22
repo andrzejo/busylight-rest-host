@@ -55,6 +55,14 @@
       <Name>BusylightRestHost</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\BusylightSdk\BusylightSDK.dll">
+      <Link>BusylightSDK.dll</Link>
+    </Content>
+    <Content Include="..\BusylightSdk\BusylightSDK.tlb">
+      <Link>BusylightSDK.tlb</Link>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
