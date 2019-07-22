@@ -6,5 +6,5 @@ mono:
 install:
   - nuget restore BusylightRestHost.sln
 script:
-  - msbuild /p:Configuration=Release BusylightRestHost.sln /p:TargetFrameworkVersion=v4.7 /target:BusylightRestHost
+  - msbuild BusylightRestHost.Tests/BusylightRestHost.Tests.csproj
   - mono packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe BusylightRestHost.Tests/BusylightRestHost.Tests.csproj
