@@ -1,0 +1,10 @@
+language: csharp
+solution: BusylightRestHost.sln
+mono:
+  - latest
+  - 4.7.0
+install:
+  - nuget restore BusylightRestHost.sln
+script:
+  - msbuild /p:Configuration=Release BusylightRestHost.sln
+  - mono packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe BusylightRestHost.Tests/BusylightRestHost.Tests.csproj
