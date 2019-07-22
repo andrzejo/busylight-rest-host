@@ -1,7 +1,6 @@
 language: csharp
 solution: BusylightRestHost.sln
 mono:
-- latest
 - 5.4.1
 install:
 - nuget restore BusylightRestHost.sln
