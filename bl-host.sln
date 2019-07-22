@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bl-host", "bl-host\bl-host.csproj", "{F040B06C-8323-4CA8-8422-5D3306F24DED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusylightRestHost", "BusylightRestHost\BusylightRestHost.csproj", "{F040B06C-8323-4CA8-8422-5D3306F24DED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bl-host-tests", "bl-host-tests\bl-host-tests.csproj", "{05976B92-3136-4771-A79B-651980D65583}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusylightRestHostUnit", "BusylightRestHostUnit\BusylightRestHostUnit.csproj", "{05976B92-3136-4771-A79B-651980D65583}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
