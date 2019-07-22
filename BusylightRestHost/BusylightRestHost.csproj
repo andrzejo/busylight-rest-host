@@ -124,7 +124,6 @@
       <Link>BusylightSDK.tlb</Link>
     </Content>
     <Content Include="ILRepack.Config.props" />
-    <Content Include="ILRepack.targets" />
     <Content Include="web-sdk\sdk-test-site.html" />
     <Content Include="web-sdk\busylight-lib.js" />
   </ItemGroup>
@@ -140,4 +139,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\ILRepack.Lib.MSBuild.2.1.7\build\ILRepack.Lib.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILRepack.Lib.MSBuild.2.1.7\build\ILRepack.Lib.MSBuild.targets'))" />
   </Target>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+</PropertyGroup>
 </Project>
