@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BusylightRestHostUnit")]
+[assembly: AssemblyTitle("BusylightRestHost.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BusylightRestHostUnit")]
+[assembly: AssemblyProduct("BusylightRestHost.Tests")]
 [assembly: AssemblyCopyright("Copyright © Andrzej Oczkowicz 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
