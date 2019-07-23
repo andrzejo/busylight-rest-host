@@ -18,7 +18,7 @@ namespace BusylightRestHost
             switch (action.GetAction())
             {
                 case "version":
-                    return @"{""version"":""1.0""}";
+                    return string.Format("{\"version\":\"{0}\"}", Version.Get());
                 case "color":
                     //busylight.Light(action.GetColorParam());
                     break;
