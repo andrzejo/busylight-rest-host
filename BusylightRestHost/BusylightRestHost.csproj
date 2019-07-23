@@ -119,6 +119,8 @@
     <Compile Include="src\HttpServer.cs" />
     <Compile Include="src\Logger.cs" />
     <Compile Include="src\Program.cs" />
+    <Compile Include="src\Resources.cs" />
+    <Compile Include="src\Version.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -150,6 +152,7 @@
       <Link>BusylightSDK.tlb</Link>
     </Content>
     <Content Include="ILRepack.Config.props" />
+    <Content Include="version" />
     <Content Include="web-sdk\sdk-test-site.html" />
     <Content Include="web-sdk\busylight-lib.js" />
   </ItemGroup>

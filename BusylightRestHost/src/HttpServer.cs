@@ -1,6 +1,7 @@
+using System;
 using System.IO;
 using System.Net;
-using System.Reflection;
+using Qoollo.Net.Http;
 
 namespace BusylightRestHost
 {
@@ -14,50 +15,66 @@ namespace BusylightRestHost
         {
             _logger = Logger.GetLogger();
             _busylightController = new BusylightController();
-            Get["/"] = request => "Busylight Rest Host";
-            Post["/action"] = RunAction;
+            RegisterAction(Get, "WelcomeMessage", "/", WelcomeMessage);
+            RegisterAction(Post, "RunAction", "/action", RunAction);
+
             RegisterStaticResources();
+        }
+
+        private static string WelcomeMessage(HttpListenerRequest arg)
+        {
+            return $"Busylight Rest Host - version: {Version.Get()}";
+        }
+
+        private void RegisterAction(RequestHandlerRegistrator method, string name, string path,
+            Func<HttpListenerRequest, string> handler)
+        {
+            method[path] = _ => WrapHttpMethod(name, _, handler);
         }
 
         private string RunAction(HttpListenerRequest arg)
         {
-            var action = ReadStream(arg.InputStream);
-            return _busylightController.RunAction(BusylightAction.FromJson(action));
+            using (var reader = new StreamReader(arg.InputStream))
+            {
+                var actionDataJson = reader.ReadToEnd();
+                var busylightAction = BusylightAction.FromJson(actionDataJson);
+                return _busylightController.RunAction(busylightAction);
+            }
+        }
+
+        private string WrapHttpMethod(string name, HttpListenerRequest request,
+            Func<HttpListenerRequest, string> method)
+        {
+            try
+            {
+                return method.Invoke(request);
+            }
+            catch (Exception e)
+            {
+                _logger.Error($"Failed to execute http action '{name}': {e.Message}. Trace: {e.StackTrace}");
+                throw e;
+            }
+        }
+
+        private void RegisterStaticResources()
+        {
+            foreach (var resource in Resources.AllResources())
+            {
+                var resourceName = resource.Key;
+                var content = resource.Value;
+                const string resourceNamePrefix = StaticContentResource + ".";
+                if (resourceName.StartsWith(resourceNamePrefix))
+                {
+                    var name = resourceName.Replace(resourceNamePrefix, "");
+                    _logger.Debug("Registered static content: " + name);
+                    RegisterAction(Get, $"ServeStaticContent({name})", "/" + name, _ => content);
+                }
+            }
         }
 
         public void Start()
         {
             Run();
-        }
-
-        private void RegisterStaticResources()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceNames = assembly.GetManifestResourceNames();
-            var currentNamespace = typeof(HttpServer).Namespace;
-
-            foreach (var resourceName in resourceNames)
-            {
-                var resourceNamePrefix = currentNamespace + "." + StaticContentResource + ".";
-                if (resourceName.StartsWith(resourceNamePrefix))
-                {
-                    using (var stream = assembly.GetManifestResourceStream(resourceName))
-                    {
-                        var result = ReadStream(stream);
-                        var name = resourceName.Replace(resourceNamePrefix, "");
-                        _logger.Debug("Registered static content: " + name);
-                        Get["/" + name] = _ => result;
-                    }
-                }
-            }
-        }
-
-        private static string ReadStream(Stream stream)
-        {
-            using (var reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
         }
     }
 }

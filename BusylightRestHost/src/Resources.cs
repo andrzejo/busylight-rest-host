@@ -1,0 +1,57 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Resources;
+
+namespace BusylightRestHost
+{
+    public static class Resources
+    {
+        public static Dictionary<string, string> AllResources()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceNames = assembly.GetManifestResourceNames();
+            var currentNamespace = CurrentNamespace();
+            var result = new Dictionary<string, string>();
+
+            foreach (var resourceName in resourceNames)
+            {
+                var resourceNamePrefix = currentNamespace + ".";
+                if (resourceName.StartsWith(resourceNamePrefix))
+                {
+                    using (var stream = assembly.GetManifestResourceStream(resourceName))
+                    {
+                        var res = ReadStream(stream);
+                        var name = resourceName.Replace(resourceNamePrefix, "");
+                        result.Add(name, res);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static string CurrentNamespace()
+        {
+            return typeof(Resources).Namespace;
+        }
+
+        public static string ResourceContent(string name)
+        {
+            var allResources = AllResources();
+            if (allResources.ContainsKey(name))
+            {
+                return allResources[name];
+            }
+            throw new MissingManifestResourceException($"Resource '{name}' not found in namespace '{CurrentNamespace()}'.");
+        }
+
+        private static string ReadStream(Stream stream)
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+    }
+}
