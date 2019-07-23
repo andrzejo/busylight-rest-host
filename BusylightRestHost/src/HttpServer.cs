@@ -6,14 +6,14 @@ namespace BusylightRestHost
 {
     public class HttpServer : Qoollo.Net.Http.HttpServer
     {
-        private readonly Logger logger;
-        private BusylightController busylightController;
+        private readonly Logger _logger;
+        private readonly BusylightController _busylightController;
         private const string StaticContentResource = "web";
 
         public HttpServer() : base(5748)
         {
-            logger = Logger.GetLogger();
-            busylightController = new BusylightController();
+            _logger = Logger.GetLogger();
+            _busylightController = new BusylightController();
             Get["/"] = request => "Busylight Rest Host";
             Post["/action"] = RunAction;
             RegisterStaticResources();
@@ -22,7 +22,7 @@ namespace BusylightRestHost
         private string RunAction(HttpListenerRequest arg)
         {
             var action = ReadStream(arg.InputStream);
-            return busylightController.RunAction(BusylightAction.FromJson(action));
+            return _busylightController.RunAction(BusylightAction.FromJson(action));
         }
 
         public void Start()
@@ -45,7 +45,7 @@ namespace BusylightRestHost
                     {
                         var result = ReadStream(stream);
                         var name = resourceName.Replace(resourceNamePrefix, "");
-                        logger.Debug("Registered static content: " + name);
+                        _logger.Debug("Registered static content: " + name);
                         Get["/" + name] = _ => result;
                     }
                 }
