@@ -152,7 +152,6 @@
       <Link>BusylightSDK.tlb</Link>
     </Content>
     <Content Include="ILRepack.Config.props" />
-    <Content Include="version" />
     <Content Include="web-sdk\sdk-test-site.html" />
     <Content Include="web-sdk\busylight-lib.js" />
   </ItemGroup>
