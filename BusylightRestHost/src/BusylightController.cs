@@ -8,18 +8,10 @@ namespace BusylightRestHost
         // private readonly SDK busylight;
 
 
-        public BusylightController() 
+        public BusylightController()
         {
             //busylight = new SDK();
         }
-        
-//        public async Task<bool> RunAction()
-//        {
-////            var content = await HttpContext.RequestBodyAsync();
-//            var action = BusylightAction.FromJson(content);
-//            var result = RunAction(action);
-//            return result;
-//        }
 
         public string RunAction(BusylightAction action)
         {

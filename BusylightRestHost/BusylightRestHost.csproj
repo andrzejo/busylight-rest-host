@@ -159,6 +159,7 @@
   <ItemGroup>
     <EmbeddedResource Include="web\communication-frame.html" />
     <EmbeddedResource Include="web\internal.js" />
+    <EmbeddedResource Include="version" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -1,6 +1,6 @@
 namespace BusylightRestHost
 {
-    public class Version
+    public static class Version
     {
         private static readonly string Ver = Resources.ResourceContent("version");
 
