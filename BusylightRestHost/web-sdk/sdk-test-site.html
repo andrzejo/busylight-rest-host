@@ -8,14 +8,18 @@
 <body>
 <script>
     window.onload = function () {
-        window.busylight = ThuliumBusylight.setup().onLibReady(function () {
+        var busylight = ThuliumBusylight.setup().onLibReady(function () {
             console.log('Lib ready, ver: ' + busylight.getHostAppVersion())
+        }).onError(function (error) {
+            console.error('BL:', error);
+        });
+
+        document.getElementById('test').addEventListener('click', function () {
             busylight.color('#ff0000');
             busylight.alert('#ff0000', ThuliumBusylight.sounds.Funky, 100);
-        }).onError(function (error) {
-            console.error("BL:", error);
-        });
+        })
     };
 </script>
+<button id="test">TEST</button>
 </body>
 </html>

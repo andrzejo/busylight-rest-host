@@ -20,7 +20,7 @@ namespace BusylightRestHost
         //    String Json = @"{""action"":""color"",""parameters"":[{""Key"":""color"",""Value"":""#ff0000""}]}";
           //  busylight.runAction(BusylightAction.FromJson(Json));
           var httpServer = new HttpServer();
-          httpServer.start();
+          httpServer.Start();
         }
     }
 }

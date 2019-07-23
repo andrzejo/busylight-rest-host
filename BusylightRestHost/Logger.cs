@@ -6,18 +6,11 @@ namespace BusylightRestHost
 {
     public class Logger
     {
-        private const string LogFilename = "thulium-agent-launcher.log";
+        private const string LogFilename = "busylight-rest-host.log";
 
         private static readonly FileStream LogFileStream = OpenLogFile();
 
         private static readonly Logger logger = new Logger();
-
-        readonly string name;
-
-        private Logger()
-        {
-            this.name = "";
-        }
 
         public static Logger GetLogger()
         {
@@ -46,10 +39,9 @@ namespace BusylightRestHost
 
         private void Write(string message, params object[] args)
         {
-            string entry = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss -") + " [" + name + "] " +
-                           String.Format(message, args);
+            var entry = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss - ") + string.Format(message, args);
 
-            byte[] bytes = new UTF8Encoding(true).GetBytes(entry + "\n");
+            var bytes = new UTF8Encoding(true).GetBytes(entry + "\n");
             LogFileStream.Seek(0, SeekOrigin.End);
             LogFileStream.Write(bytes, 0, bytes.Length);
             LogFileStream.Flush();

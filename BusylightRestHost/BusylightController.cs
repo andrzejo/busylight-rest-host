@@ -1,30 +1,25 @@
 using System;
 using System.Threading.Tasks;
-using Unosquare.Labs.EmbedIO;
-using Unosquare.Labs.EmbedIO.Constants;
-using Unosquare.Labs.EmbedIO.Modules;
 
 namespace BusylightRestHost
 {
-    public class BusylightController : WebApiController
+    public class BusylightController
     {
         // private readonly SDK busylight;
 
 
-        public BusylightController(IHttpContext context) : base(context)
+        public BusylightController() 
         {
             //busylight = new SDK();
         }
-
-
-        [WebApiHandler(HttpVerbs.Post, "/action/")]
-        public async Task<bool> RunAction()
-        {
-            var content = await HttpContext.RequestBodyAsync();
-            var action = BusylightAction.FromJson(content);
-            var result = RunAction(action);
-            return await Ok(result);
-        }
+        
+//        public async Task<bool> RunAction()
+//        {
+////            var content = await HttpContext.RequestBodyAsync();
+//            var action = BusylightAction.FromJson(content);
+//            var result = RunAction(action);
+//            return result;
+//        }
 
         public string RunAction(BusylightAction action)
         {
