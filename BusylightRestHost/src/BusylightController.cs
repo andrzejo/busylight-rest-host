@@ -1,41 +1,29 @@
 using System;
-using System.Threading.Tasks;
+using Busylight;
+using BusylightRestHost.Action;
+
 
 namespace BusylightRestHost
 {
     public class BusylightController
     {
-        // private readonly SDK busylight;
-
+        private readonly Factory _factory;
 
         public BusylightController()
         {
-            //busylight = new SDK();
+            try
+            {
+                _factory = new Factory(new SDK());
+            }
+            catch (Exception e)
+            {
+                Logger.GetLogger().Error(e, "Failed to create BusylightSDK.");
+            }
         }
 
-        public string RunAction(BusylightAction action)
+        public string RunAction(ActionData actionData)
         {
-            switch (action.GetAction())
-            {
-                case "version":
-                    return string.Format("{\"version\":\"{0}\"}", Version.Get());
-                case "color":
-                    //busylight.Light(action.GetColorParam());
-                    break;
-                case "alert":
-                    //busylight.Alert(action.GetColorParam(), );
-                    break;
-                case "blink":
-                    //busylight.Light(action.GetColorParam());
-                    break;
-                case "off":
-                    //busylight.Light(BusylightColor.Off);
-                    break;
-                default:
-                    throw new ArgumentException(@"Invalid action " + action.GetAction());
-            }
-
-            return "";
+            return _factory == null ? "" : _factory.Create(actionData).Execute();
         }
     }
 }

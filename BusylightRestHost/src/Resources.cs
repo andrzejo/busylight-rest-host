@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using BusylightRestHost.Utils;
 
 namespace BusylightRestHost
 {
@@ -21,7 +22,7 @@ namespace BusylightRestHost
                 {
                     using (var stream = assembly.GetManifestResourceStream(resourceName))
                     {
-                        var res = ReadStream(stream);
+                        var res = Streams.Read(stream);
                         var name = resourceName.Replace(resourceNamePrefix, "");
                         result.Add(name, res);
                     }
@@ -43,15 +44,9 @@ namespace BusylightRestHost
             {
                 return allResources[name];
             }
-            throw new MissingManifestResourceException($"Resource '{name}' not found in namespace '{CurrentNamespace()}'.");
-        }
 
-        private static string ReadStream(Stream stream)
-        {
-            using (var reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
+            throw new MissingManifestResourceException(
+                $"Resource '{name}' not found in namespace '{CurrentNamespace()}'.");
         }
     }
 }

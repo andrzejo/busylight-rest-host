@@ -108,7 +108,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\BusylightAction.cs" />
+    <Compile Include="src\Action\Action.cs" />
+    <Compile Include="src\Action\ActionData.cs" />
+    <Compile Include="src\Action\ActionParameters.cs" />
+    <Compile Include="src\Action\ColorAction.cs" />
+    <Compile Include="src\Action\Factory.cs" />
+    <Compile Include="src\Action\IAction.cs" />
+    <Compile Include="src\Action\VersionAction.cs" />
+    <Compile Include="src\Action\VersionTO.cs" />
     <Compile Include="src\BusylightController.cs" />
     <Compile Include="src\Form1.cs">
       <SubType>Form</SubType>
@@ -120,6 +127,7 @@
     <Compile Include="src\Logger.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="src\Resources.cs" />
+    <Compile Include="src\Utils\Streams.cs" />
     <Compile Include="src\Version.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

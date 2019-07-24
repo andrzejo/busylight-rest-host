@@ -36,6 +36,11 @@ namespace BusylightRestHost
         {
             Write("ERROR: " + message, args);
         }
+        
+        public void Error(Exception e, string message = "Exception")
+        {
+            Error($"{message}: {e.Message}. Trace: {e.StackTrace}");
+        }
 
         private void Write(string message, params object[] args)
         {

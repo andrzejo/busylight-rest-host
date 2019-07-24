@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Net;
+using BusylightRestHost.Action;
+using BusylightRestHost.Utils;
 using Qoollo.Net.Http;
 
 namespace BusylightRestHost
@@ -34,12 +36,9 @@ namespace BusylightRestHost
 
         private string RunAction(HttpListenerRequest arg)
         {
-            using (var reader = new StreamReader(arg.InputStream))
-            {
-                var actionDataJson = reader.ReadToEnd();
-                var busylightAction = BusylightAction.FromJson(actionDataJson);
-                return _busylightController.RunAction(busylightAction);
-            }
+            var actionDataJson = Streams.Read(arg.InputStream);
+            var busylightAction = ActionData.FromJson(actionDataJson);
+            return _busylightController.RunAction(busylightAction);
         }
 
         private string WrapHttpMethod(string name, HttpListenerRequest request,
@@ -63,6 +62,7 @@ namespace BusylightRestHost
                 var resourceName = resource.Key;
                 var content = resource.Value;
                 const string resourceNamePrefix = StaticContentResource + ".";
+                // ReSharper disable once InvertIf
                 if (resourceName.StartsWith(resourceNamePrefix))
                 {
                     var name = resourceName.Replace(resourceNamePrefix, "");
