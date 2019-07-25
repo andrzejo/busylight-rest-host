@@ -1,5 +1,5 @@
 using System;
-using System.IO;
+using System.Linq;
 using System.Net;
 using BusylightRestHost.Action;
 using BusylightRestHost.Utils;
@@ -50,7 +50,7 @@ namespace BusylightRestHost
             }
             catch (Exception e)
             {
-                _logger.Error($"Failed to execute http action '{name}': {e.Message}. Trace: {e.StackTrace}");
+                _logger.Error($"Failed to execute method '{name}': {e.Message}. Trace: {e.StackTrace}");
                 throw e;
             }
         }
@@ -65,11 +65,24 @@ namespace BusylightRestHost
                 // ReSharper disable once InvertIf
                 if (resourceName.StartsWith(resourceNamePrefix))
                 {
-                    var name = resourceName.Replace(resourceNamePrefix, "");
+                    var name = ResourceNameToPath(resourceName.Replace(resourceNamePrefix, ""));
                     _logger.Debug("Registered static content: " + name);
                     RegisterAction(Get, $"ServeStaticContent({name})", "/" + name, _ => content);
                 }
             }
+        }
+
+        public static string ResourceNameToPath(string resourceName)
+        {
+            var parts = resourceName.Split('.');
+            if (parts.Length == 1)
+            {
+                return parts[0];
+            }
+
+            var pathParts = parts.Take(parts.Length - 1).ToArray();
+            var ext = parts[parts.Length - 1];
+            return string.Join("/", pathParts) + "." + ext;
         }
 
         public void Start()

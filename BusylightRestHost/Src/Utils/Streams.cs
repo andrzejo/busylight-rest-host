@@ -6,7 +6,11 @@ namespace BusylightRestHost.Utils
     {
         public static string Read(Stream stream)
         {
-            stream.Position = 0;
+            if (stream.CanSeek)
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+            }
+
             using (var reader = new StreamReader(stream))
             {
                 return reader.ReadToEnd();

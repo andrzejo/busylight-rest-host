@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms.VisualStyles;
 using Busylight;
 
 namespace BusylightRestHost.Action
@@ -7,24 +9,30 @@ namespace BusylightRestHost.Action
     public class Factory
     {
         private readonly IBusylightLibProvider _libProvider;
-        private readonly Dictionary<string, Type> _actions = new Dictionary<string, Type>();
 
         public Factory(IBusylightLibProvider libProvider)
         {
             _libProvider = libProvider;
-            _actions.Add("color", typeof(ColorAction));
-            _actions.Add("version", typeof(VersionAction));
         }
 
         public IAction Create(ActionData data)
         {
-            var type = _actions.TryGetValue(data.GetAction(), out var value) ? value : null;
-            if (type == null)
+            return CreateAction(data);
+        }
+
+        private IAction CreateAction(ActionData data)
+        {
+            var action = data.GetAction();
+            var className = action.First().ToString().ToUpper() + action.Substring(1) + "Action";
+            var qualifiedClassName = typeof(IAction).Namespace + "." + className;
+            var classType = Type.GetType(qualifiedClassName);
+            if (classType == null)
             {
-                throw new ArgumentException($"Invalid action '{data.GetAction()}'.");
+                var message = $"Action '{action}' is not implemented (Missing class '{qualifiedClassName}'";
+                throw new ArgumentException(message);
             }
 
-            return (IAction) Activator.CreateInstance(type, _libProvider.Instance(), data.GetParameters());
+            return (IAction) Activator.CreateInstance(classType, _libProvider.Instance(), data.GetParameters());
         }
     }
 }
