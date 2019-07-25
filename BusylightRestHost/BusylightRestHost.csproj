@@ -117,27 +117,12 @@
     <Compile Include="Src\Action\VersionAction.cs" />
     <Compile Include="Src\Action\VersionTO.cs" />
     <Compile Include="Src\BusylightController.cs" />
-    <Compile Include="Src\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Src\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Src\HttpServer.cs" />
     <Compile Include="Src\Logger.cs" />
     <Compile Include="Src\Program.cs" />
     <Compile Include="Src\Resources.cs" />
     <Compile Include="Src\Utils\Streams.cs" />
     <Compile Include="Src\Version.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -159,7 +144,6 @@
     <Content Include="..\BusylightSdk\BusylightSDK.tlb">
       <Link>BusylightSDK.tlb</Link>
     </Content>
-    <Content Include="ILRepack.Config.props" />
     <Content Include="web-sdk\sdk-test-site.html" />
     <Content Include="web-sdk\busylight-lib.js" />
   </ItemGroup>
