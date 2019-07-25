@@ -24,7 +24,7 @@ namespace BusylightRestHost.Action
         {
             var action = data.GetAction();
             var className = action.First().ToString().ToUpper() + action.Substring(1) + "Action";
-            var qualifiedClassName = typeof(IAction).Namespace + "." + className;
+            var qualifiedClassName = $"{typeof(IAction).Namespace}.List.{className}";
             var classType = Type.GetType(qualifiedClassName);
             if (classType == null)
             {

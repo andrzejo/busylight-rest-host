@@ -1,6 +1,6 @@
 using Busylight;
 
-namespace BusylightRestHost.Action
+namespace BusylightRestHost.Action.List
 {
     public class ColorAction : Action
     {

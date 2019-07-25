@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace BusylightRestHost.Action
+namespace BusylightRestHost.Action.List
 {
     [DataContract]
     public class VersionTo

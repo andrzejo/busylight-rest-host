@@ -1,7 +1,7 @@
 using Busylight;
 using BusylightRestHost.Utils;
 
-namespace BusylightRestHost.Action
+namespace BusylightRestHost.Action.List
 {
     public class VersionAction : Action
     {
