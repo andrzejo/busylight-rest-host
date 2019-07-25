@@ -7,25 +7,29 @@ namespace BusylightRestHost
     public class TrayMenu
     {
         private readonly NotifyIcon _notifyIcon;
+        private readonly ContextMenu _contextMenu;
 
         public TrayMenu()
         {
-            var contextMenu = new ContextMenu();
-            var menuItem = new MenuItem();
+            _contextMenu = new ContextMenu();
 
-            contextMenu.MenuItems.AddRange(new[] {menuItem});
-
-            menuItem.Index = 0;
-            menuItem.Text = "E&xit";
-            menuItem.Click += ExitMenuItem_Click;
+            AddItem("E&xit", ExitMenuItem_Click);
 
             _notifyIcon = new NotifyIcon
             {
-                ContextMenu = contextMenu,
+                ContextMenu = _contextMenu,
                 Text = "Busylight - Browser Integration Host",
                 Visible = true,
                 Icon = new Icon(GetType(), "Resources.icon.ico")
             };
+        }
+
+        private void AddItem(string label, EventHandler eventHandler)
+        {
+            var menuItem = new MenuItem();
+            menuItem.Text = label;
+            menuItem.Click += eventHandler;
+            _contextMenu.MenuItems.Add(menuItem);
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)

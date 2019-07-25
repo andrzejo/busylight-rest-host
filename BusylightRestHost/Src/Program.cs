@@ -30,6 +30,7 @@ namespace BusylightRestHost
         [STAThread]
         static void Main()
         {
+            Logger.GetLogger().Info("Start app...");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Context());
