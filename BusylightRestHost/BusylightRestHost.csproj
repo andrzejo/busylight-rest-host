@@ -121,6 +121,7 @@
     <Compile Include="Src\Logger.cs" />
     <Compile Include="Src\Program.cs" />
     <Compile Include="Src\Resources.cs" />
+    <Compile Include="Src\Utils\Json.cs" />
     <Compile Include="Src\Utils\Streams.cs" />
     <Compile Include="Src\Version.cs" />
     <None Include="packages.config" />

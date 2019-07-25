@@ -19,13 +19,5 @@ namespace BusylightRestHost.Action
         }
 
         public abstract string Execute();
-
-        protected static string Serialize(Type type, object obj)
-        {
-            var stream = new MemoryStream();
-            var serializer = new DataContractJsonSerializer(type);
-            serializer.WriteObject(stream, obj);
-            return Streams.Read(stream);
-        }
     }
 }

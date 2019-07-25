@@ -10,13 +10,13 @@ namespace BusylightRestHost.Tests.Unit.Action
         public void ShouldReturnVersion()
         {
             //given
-            IAction action = new VersionAction(null, null);
+            IAction action = new VersionAction("dev-version");
 
             //when
             var json = action.Execute();
 
             //then
-            Assert.AreEqual("{\"version\":\"dev\"}", json);
+            Assert.AreEqual("{\"version\":\"dev-version\"}", json);
         }
     }
 }
