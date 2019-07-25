@@ -1,5 +1,3 @@
-using System;
-using Busylight;
 using BusylightRestHost.Action;
 
 
@@ -11,19 +9,12 @@ namespace BusylightRestHost
 
         public BusylightController()
         {
-            try
-            {
-               // _factory = new Factory(new SDK());
-            }
-            catch (Exception e)
-            {
-                Logger.GetLogger().Error(e, "Failed to create BusylightSDK.");
-            }
+            _factory = new Factory(new BusylightLibProvider());
         }
 
         public string RunAction(ActionData actionData)
         {
-            return _factory == null ? "" : _factory.Create(actionData).Execute();
+            return _factory.Create(actionData).Execute();
         }
     }
 }

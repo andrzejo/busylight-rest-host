@@ -117,6 +117,7 @@
     <Compile Include="Src\Action\VersionAction.cs" />
     <Compile Include="Src\Action\VersionTO.cs" />
     <Compile Include="Src\BusylightController.cs" />
+    <Compile Include="Src\BusylightLibProvider.cs" />
     <Compile Include="Src\HttpServer.cs" />
     <Compile Include="Src\Logger.cs" />
     <Compile Include="Src\Program.cs" />

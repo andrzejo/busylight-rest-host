@@ -6,12 +6,12 @@ namespace BusylightRestHost.Action
 {
     public class Factory
     {
-        private readonly ISDK _sdk;
+        private readonly IBusylightLibProvider _libProvider;
         private readonly Dictionary<string, Type> _actions = new Dictionary<string, Type>();
 
-        public Factory(ISDK sdk)
+        public Factory(IBusylightLibProvider libProvider)
         {
-            _sdk = sdk;
+            _libProvider = libProvider;
             _actions.Add("color", typeof(ColorAction));
             _actions.Add("version", typeof(VersionAction));
         }
@@ -24,7 +24,7 @@ namespace BusylightRestHost.Action
                 throw new ArgumentException($"Invalid action '{data.GetAction()}'.");
             }
 
-            return (IAction) Activator.CreateInstance(type, _sdk, data.GetParameters());
+            return (IAction) Activator.CreateInstance(type, _libProvider.Instance(), data.GetParameters());
         }
     }
 }
