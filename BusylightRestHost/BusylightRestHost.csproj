@@ -122,6 +122,8 @@
     <Compile Include="Src\Logger.cs" />
     <Compile Include="Src\Program.cs" />
     <Compile Include="Src\Resources.cs" />
+    <Compile Include="Src\TrayMenu.cs" />
+    <Compile Include="Src\Utils\Dialogs.cs" />
     <Compile Include="Src\Utils\Json.cs" />
     <Compile Include="Src\Utils\Streams.cs" />
     <Compile Include="Src\Version.cs" />
@@ -149,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\version" />
+    <EmbeddedResource Include="Resources\icon.ico" />
     <EmbeddedResource Include="Resources\WebHttpRoot\communication-frame.html" />
     <EmbeddedResource Include="Resources\WebHttpRoot\internal.js" />
     <EmbeddedResource Include="Resources\WebHttpRoot\Sdk\busylight-lib.js" />
@@ -156,7 +159,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

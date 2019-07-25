@@ -9,7 +9,7 @@ namespace BusylightRestHost.Action
     [DataContract]
     public class ActionData
     {
-        [DataMember(Name = "action")] private string _action;
+        [DataMember(Name = "action")] private string _action = "";
 
         [DataMember(Name = "parameters")]
         private Dictionary<string, string> _parameters = new Dictionary<string, string>();

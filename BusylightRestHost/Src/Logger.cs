@@ -39,7 +39,7 @@ namespace BusylightRestHost
         
         public void Error(Exception e, string message = "Exception")
         {
-            Error($"{message}: {e.Message}. Trace: {e.StackTrace}");
+            Error($"{message}: {e.GetType()} - {e.Message}. Trace: {e.StackTrace}");
         }
 
         private void Write(string message, params object[] args)
