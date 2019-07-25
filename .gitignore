@@ -2,3 +2,7 @@
 */bin/*
 */obj/*
 packages
+TestResult.xml
+BusylightRestHost.sln.DotSettings.user
+BusylightRestHost.Tests/mono_crash*
+

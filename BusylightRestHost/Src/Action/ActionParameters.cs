@@ -40,9 +40,9 @@ namespace BusylightRestHost.Action
             }
             catch (Exception e)
             {
-                Logger.GetLogger().Error($"Failed to parse color {color}.", e);
-                throw e;
+                throw new ArgumentException($"Failed to parse color {color}.", e);
             }
+
             throw new ArgumentException($"Invalid color value '{color}'.");
         }
     }
