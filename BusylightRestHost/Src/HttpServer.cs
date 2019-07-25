@@ -11,7 +11,7 @@ namespace BusylightRestHost
     {
         private readonly Logger _logger;
         private readonly BusylightController _busylightController;
-        private const string StaticContentResource = "web";
+        private const string StaticContentResource = "WebHttpRoot";
 
         public HttpServer() : base(5748)
         {

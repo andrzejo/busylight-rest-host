@@ -6,6 +6,16 @@ using System.Windows.Forms;
 
 namespace BusylightRestHost
 {
+    internal class Context : ApplicationContext
+    {
+        public Context()
+        {
+            var httpServer = new HttpServer();
+            httpServer.Start();
+        }
+    }
+
+
     static class Program
     {
         [STAThread]
@@ -13,7 +23,7 @@ namespace BusylightRestHost
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run();
+            Application.Run(new Context());
         }
     }
 }

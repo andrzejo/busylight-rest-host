@@ -13,7 +13,7 @@ namespace BusylightRestHost
         {
             try
             {
-                _factory = new Factory(new SDK());
+               // _factory = new Factory(new SDK());
             }
             catch (Exception e)
             {

@@ -145,13 +145,13 @@
     <Content Include="..\BusylightSdk\BusylightSDK.tlb">
       <Link>BusylightSDK.tlb</Link>
     </Content>
-    <Content Include="web-sdk\sdk-test-site.html" />
-    <Content Include="web-sdk\busylight-lib.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="web\communication-frame.html" />
-    <EmbeddedResource Include="web\internal.js" />
-    <EmbeddedResource Include="version" />
+    <EmbeddedResource Include="Resources\version" />
+    <EmbeddedResource Include="Resources\WebHttpRoot\communication-frame.html" />
+    <EmbeddedResource Include="Resources\WebHttpRoot\internal.js" />
+    <EmbeddedResource Include="Resources\WebHttpRoot\Sdk\busylight-lib.js" />
+    <EmbeddedResource Include="Resources\WebHttpRoot\Sdk\sdk-test-site.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

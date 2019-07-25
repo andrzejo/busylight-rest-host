@@ -8,6 +8,8 @@ namespace BusylightRestHost
 {
     public static class Resources
     {
+        private const string ResourcesDir = "Resources";
+
         public static Dictionary<string, string> AllResources()
         {
             var assembly = Assembly.GetExecutingAssembly();
@@ -17,7 +19,7 @@ namespace BusylightRestHost
 
             foreach (var resourceName in resourceNames)
             {
-                var resourceNamePrefix = currentNamespace + ".";
+                var resourceNamePrefix = currentNamespace + "." + ResourcesDir + ".";
                 if (resourceName.StartsWith(resourceNamePrefix))
                 {
                     using (var stream = assembly.GetManifestResourceStream(resourceName))
