@@ -1,58 +1,40 @@
-using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using BusylightRestHost.Action;
+using BusylightRestHost.SimpleHttpServer;
 using BusylightRestHost.Utils;
-using Qoollo.Net.Http;
 
 namespace BusylightRestHost
 {
-    public class HttpServer : Qoollo.Net.Http.HttpServer
+    public class HttpServer
     {
         private readonly Logger _logger;
         private readonly BusylightController _busylightController;
+        private readonly Server _server;
         private const string StaticContentResource = "WebHttpRoot";
 
-        public HttpServer() : base(5748)
+        public HttpServer()
         {
             _logger = Logger.GetLogger();
             _busylightController = new BusylightController();
-            RegisterAction(Get, "WelcomeMessage", "/", WelcomeMessage);
-            RegisterAction(Post, "RunAction", "/action", RunAction);
+            _server = new Server(19841);
 
+            _server.RegisterPath(HttpMethod.Get, "/", WelcomeMessageHandler);
+            _server.RegisterPath(HttpMethod.Post, "/action", RunActionHandler);
             RegisterStaticResources();
         }
 
-        private static string WelcomeMessage(HttpListenerRequest arg)
+        private static Response WelcomeMessageHandler(HttpListenerRequest request, HttpListenerContext context)
         {
-            return $"Busylight Rest Host - version: {Version.Get()}";
+            return Response.RespondPlain($"Busylight Rest Host - version: {Version.Get()}");
         }
 
-        private void RegisterAction(RequestHandlerRegistrator method, string name, string path,
-            Func<HttpListenerRequest, string> handler)
+        private Response RunActionHandler(HttpListenerRequest request, HttpListenerContext unused)
         {
-            method[path] = _ => WrapHttpMethod(name, _, handler);
-        }
-
-        private string RunAction(HttpListenerRequest arg)
-        {
-            var actionDataJson = Streams.Read(arg.InputStream);
+            var actionDataJson = Streams.Read(request.InputStream);
             var busylightAction = ActionData.FromJson(actionDataJson);
-            return _busylightController.RunAction(busylightAction);
-        }
-
-        private string WrapHttpMethod(string name, HttpListenerRequest request,
-            Func<HttpListenerRequest, string> method)
-        {
-            try
-            {
-                return method.Invoke(request);
-            }
-            catch (Exception e)
-            {
-                _logger.Error($"Failed to execute method '{name}': {e.Message}. Trace: {e.StackTrace}");
-                throw e;
-            }
+            return Response.RespondJson(_busylightController.RunAction(busylightAction));
         }
 
         private void RegisterStaticResources()
@@ -66,10 +48,17 @@ namespace BusylightRestHost
                 if (resourceName.StartsWith(resourceNamePrefix))
                 {
                     var name = ResourceNameToPath(resourceName.Replace(resourceNamePrefix, ""));
+                    var extension = Path.GetExtension(name)?.ToLower().Remove(0, 1);
+                    var contentType = ContentType.ForExtension(extension);
                     _logger.Debug("Registered static content: " + name);
-                    RegisterAction(Get, $"ServeStaticContent({name})", "/" + name, _ => content);
+                    _server.RegisterPath(HttpMethod.Get, "/" + name, ServeStaticContent(content, contentType));
                 }
             }
+        }
+
+        private static RequestHandler ServeStaticContent(string content, string contentType)
+        {
+            return (request, context) => Response.Respond(content, contentType);
         }
 
         public static string ResourceNameToPath(string resourceName)
@@ -87,7 +76,7 @@ namespace BusylightRestHost
 
         public void Start()
         {
-            Run();
+            _server.Start();
         }
     }
 }

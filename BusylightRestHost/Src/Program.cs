@@ -8,11 +8,9 @@ namespace BusylightRestHost
     {
         public Context()
         {
-            var http2 = new HttpServer2();
             var httpServer = new HttpServer();
             try
             {
-                http2.Start();
                 httpServer.Start();
             }
             catch (Exception e)

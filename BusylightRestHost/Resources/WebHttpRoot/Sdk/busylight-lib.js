@@ -7,7 +7,7 @@
 
     var Busylight = function (options) {
         var appendTo = options['appendTo'] || document.body;
-        var host = options['host'] || 'http://localhost:5748';
+        var host = options['host'] || 'http://localhost:19841';
         var hostVersion = null;
         var available = false;
         var frameElement = false;
