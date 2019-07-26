@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading;
+using BusylightRestHost.Utils;
 
 namespace BusylightRestHost.SimpleHttpServer
 {
@@ -98,6 +99,7 @@ namespace BusylightRestHost.SimpleHttpServer
                                 }
 
                                 context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+                                LogResponse(context);
                             }
                             catch (Exception e)
                             {
@@ -116,6 +118,15 @@ namespace BusylightRestHost.SimpleHttpServer
                     _logger.Error(e, "Failed to handle request.");
                 }
             });
+        }
+
+        private void LogResponse(HttpListenerContext context)
+        {
+            var response = context.Response;
+            var type = response.ContentType ?? response.Headers[HttpRequestHeader.ContentType];
+            var log =
+                $"Serve '{context.Request.Url.AbsolutePath}' [HTTP {response.StatusCode}, size: {response.ContentLength64}, content-type: {type}]";
+            _logger.Debug(log);
         }
 
         private Response HandleRequest(HttpListenerContext context)
