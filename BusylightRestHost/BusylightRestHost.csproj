@@ -53,6 +53,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SharpHttpServer, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Qoollo.SharpHttpServer.0.1.0\lib\net40\SharpHttpServer.dll</HintPath>
       <Private>True</Private>
@@ -105,6 +109,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="uhttpsharp, Version=0.1.5653.28566, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uHttpSharp.0.1.6.22\lib\net40\uhttpsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,6 +127,10 @@
     <Compile Include="Src\BusylightController.cs" />
     <Compile Include="Src\BusylightLibProvider.cs" />
     <Compile Include="Src\HttpServer.cs" />
+    <Compile Include="Src\HttpServer2.cs" />
+    <Compile Include="Src\SimpleHttpServer\ContentType.cs" />
+    <Compile Include="Src\SimpleHttpServer\Response.cs" />
+    <Compile Include="Src\SimpleHttpServer\Server.cs" />
     <Compile Include="Src\Logger.cs" />
     <Compile Include="Src\Program.cs" />
     <Compile Include="Src\Resources.cs" />
