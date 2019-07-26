@@ -18,7 +18,7 @@ namespace BusylightRestHost
         {
             _logger = Logger.GetLogger();
             _busylightController = new BusylightController();
-            _server = new Server(19841);
+            _server = new Server(ApplicationText.ServerPort, ApplicationText.ServerAddress);
 
             _server.RegisterPath(HttpMethod.Get, "/", WelcomeMessageHandler);
             _server.RegisterPath(HttpMethod.Post, "/action", RunActionHandler);
@@ -77,6 +77,11 @@ namespace BusylightRestHost
         public void Start()
         {
             _server.Start();
+        }
+        
+        public void Stop()
+        {
+            _server.Stop();
         }
     }
 }

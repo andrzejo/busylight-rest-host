@@ -13,12 +13,15 @@ namespace BusylightRestHost
         {
             _contextMenu = new ContextMenu();
 
+            AddItem("Open test page", OpenTestPageMenuItem_Click);
+            AddItem("Open documentation", OpenDocsMenuItem_Click);
+            _contextMenu.MenuItems.Add("-");
             AddItem("E&xit", ExitMenuItem_Click);
 
             _notifyIcon = new NotifyIcon
             {
                 ContextMenu = _contextMenu,
-                Text = "Busylight - Browser Integration Host",
+                Text = ApplicationText.AppHint,
                 Visible = true,
                 Icon = new Icon(GetType(), "Resources.icon.ico")
             };
@@ -30,6 +33,16 @@ namespace BusylightRestHost
             menuItem.Text = label;
             menuItem.Click += eventHandler;
             _contextMenu.MenuItems.Add(menuItem);
+        }
+
+        private void OpenTestPageMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(ApplicationText.getTestPageUrl());
+        }
+
+        private void OpenDocsMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(ApplicationText.DocsUrl);
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)

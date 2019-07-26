@@ -21,6 +21,11 @@ namespace BusylightRestHost
             }
 
             new TrayMenu();
+            
+            AppDomain.CurrentDomain.ProcessExit += (s, e) =>
+            {
+                httpServer.Stop();
+            };
         }
     }
 

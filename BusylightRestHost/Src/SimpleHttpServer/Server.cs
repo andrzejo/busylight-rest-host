@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading;
-using BusylightRestHost.Utils;
 
 namespace BusylightRestHost.SimpleHttpServer
 {
@@ -87,37 +86,42 @@ namespace BusylightRestHost.SimpleHttpServer
                                 return;
                             }
 
-                            try
-                            {
-                                var response = HandleRequest(context);
-                                var buffer = Encoding.UTF8.GetBytes(response.Body);
-                                context.Response.StatusCode = response.HttpCode;
-                                context.Response.ContentLength64 = buffer.Length;
-                                foreach (var header in response.Headers)
-                                {
-                                    context.Response.Headers.Add(header.Key, header.Value);
-                                }
-
-                                context.Response.OutputStream.Write(buffer, 0, buffer.Length);
-                                LogResponse(context);
-                            }
-                            catch (Exception e)
-                            {
-                                _logger.Error(e, "Failed to handle request.");
-                                context.Response.StatusCode = 500;
-                            }
-                            finally
-                            {
-                                context.Response.OutputStream.Close();
-                            }
+                            HandleRequest(context);
                         }, _listener.GetContext());
                     }
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e, "Failed to handle request.");
+                    _logger.Error(e, "Failed to handle request");
                 }
             });
+        }
+
+        private void HandleRequest(HttpListenerContext context)
+        {
+            try
+            {
+                var response = PrepareResponse(context);
+                var buffer = Encoding.UTF8.GetBytes(response.Body);
+                context.Response.StatusCode = response.HttpCode;
+                context.Response.ContentLength64 = buffer.Length;
+                foreach (var header in response.Headers)
+                {
+                    context.Response.Headers.Add(header.Key, header.Value);
+                }
+
+                context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+                LogResponse(context);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Failed to handle request");
+                context.Response.StatusCode = 500;
+            }
+            finally
+            {
+                context.Response.OutputStream.Close();
+            }
         }
 
         private void LogResponse(HttpListenerContext context)
@@ -129,7 +133,7 @@ namespace BusylightRestHost.SimpleHttpServer
             _logger.Debug(log);
         }
 
-        private Response HandleRequest(HttpListenerContext context)
+        private Response PrepareResponse(HttpListenerContext context)
         {
             var path = context.Request.Url.AbsolutePath;
             try

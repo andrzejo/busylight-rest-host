@@ -112,6 +112,7 @@
     <Compile Include="Src\Action\List\ColorAction.cs" />
     <Compile Include="Src\Action\List\VersionAction.cs" />
     <Compile Include="Src\Action\List\VersionTO.cs" />
+    <Compile Include="Src\ApplicationText.cs" />
     <Compile Include="Src\BusylightController.cs" />
     <Compile Include="Src\BusylightLibProvider.cs" />
     <Compile Include="Src\HttpServer.cs" />
