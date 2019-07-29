@@ -8,5 +8,10 @@ namespace BusylightRestHost.Utils
         {
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        public static void Info(string message, string title = "Info")
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

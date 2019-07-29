@@ -66,7 +66,7 @@
                 if (response.action.action === 'version') {
                     available = true;
                     hostVersion = response.response.version;
-                    callbacks.libReady();
+                    callbacks.libReady(this);
                 }
                 callbacks.response(response);
             } else {

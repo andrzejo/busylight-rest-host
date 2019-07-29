@@ -12,5 +12,12 @@ namespace BusylightRestHost
         {
             return $"http://{ServerAddress}:{ServerPort}/Sdk/sdk-test-site.html";
         }
+
+        public static string getAbout()
+        {
+            return
+                $"Kuando™ BUSYLIGHT device to web browser integration app.\n\nFor more information visit documentation page {DocsUrl}." +
+                "\n\nNote that this application is Open Source project, NOT OFFICIAL Kuando software.\n\nCopyright (c) Andrzej Oczkowicz 2019";
+        }
     }
 }

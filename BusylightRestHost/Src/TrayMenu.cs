@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using BusylightRestHost.Utils;
 
 namespace BusylightRestHost
 {
@@ -13,9 +14,11 @@ namespace BusylightRestHost
         {
             _contextMenu = new ContextMenu();
 
+            AddItem(ApplicationText.AppHint, AboutMenuItem_Click);
+            AddItem("-");
             AddItem("Open test page", OpenTestPageMenuItem_Click);
             AddItem("Open documentation", OpenDocsMenuItem_Click);
-            _contextMenu.MenuItems.Add("-");
+            AddItem("-");
             AddItem("E&xit", ExitMenuItem_Click);
 
             _notifyIcon = new NotifyIcon
@@ -27,11 +30,18 @@ namespace BusylightRestHost
             };
         }
 
-        private void AddItem(string label, EventHandler eventHandler)
+        private void AboutMenuItem_Click(object sender, EventArgs e)
         {
-            var menuItem = new MenuItem();
-            menuItem.Text = label;
-            menuItem.Click += eventHandler;
+            Dialogs.Info(ApplicationText.getAbout());
+        }
+
+        private void AddItem(string label, EventHandler eventHandler = null)
+        {
+            var menuItem = new MenuItem {Text = label};
+            if (eventHandler != null)
+            {
+                menuItem.Click += eventHandler;
+            }
             _contextMenu.MenuItems.Add(menuItem);
         }
 
