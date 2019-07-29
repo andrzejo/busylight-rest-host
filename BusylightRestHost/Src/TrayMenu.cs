@@ -14,7 +14,7 @@ namespace BusylightRestHost
         {
             _contextMenu = new ContextMenu();
 
-            AddItem(ApplicationText.AppHint, AboutMenuItem_Click);
+            AddItem(ApplicationText.GetAppHint(), AboutMenuItem_Click);
             AddItem("-");
             AddItem("Open test page", OpenTestPageMenuItem_Click);
             AddItem("Open documentation", OpenDocsMenuItem_Click);
@@ -24,7 +24,7 @@ namespace BusylightRestHost
             _notifyIcon = new NotifyIcon
             {
                 ContextMenu = _contextMenu,
-                Text = ApplicationText.AppHint,
+                Text = ApplicationText.GetAppHint(),
                 Visible = true,
                 Icon = new Icon(GetType(), "Resources.icon.ico")
             };
@@ -32,7 +32,7 @@ namespace BusylightRestHost
 
         private void AboutMenuItem_Click(object sender, EventArgs e)
         {
-            Dialogs.Info(ApplicationText.getAbout());
+            Dialogs.Info(ApplicationText.GetAbout());
         }
 
         private void AddItem(string label, EventHandler eventHandler = null)
@@ -47,7 +47,7 @@ namespace BusylightRestHost
 
         private void OpenTestPageMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(ApplicationText.getTestPageUrl());
+            System.Diagnostics.Process.Start(ApplicationText.GetTestPageUrl());
         }
 
         private void OpenDocsMenuItem_Click(object sender, EventArgs e)
