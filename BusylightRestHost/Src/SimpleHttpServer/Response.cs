@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Net;
+using static BusylightRestHost.SimpleHttpServer.ContentType;
 
 namespace BusylightRestHost.SimpleHttpServer
 {
     public class Response
     {
         public string Body { get; set; }
-
         public int HttpCode { get; set; }
-
         public Dictionary<HttpRequestHeader, string> Headers { get; }
+        public string ContentType { get; set; }
 
         public Response()
         {
@@ -49,15 +49,16 @@ namespace BusylightRestHost.SimpleHttpServer
 
         public static Response RespondJson(string body)
         {
-            return Respond(body, ContentType.Json);
+            return Respond(body, Json);
         }
 
-        public static Response Respond(string body, string contentType = ContentType.Plain)
+        public static Response Respond(string body, string contentType = Plain)
         {
             return new Response
             {
-                Body = body
-            }.AddHeader(HttpRequestHeader.ContentType, contentType);
+                Body = body,
+                ContentType = contentType
+            };
         }
     }
 }

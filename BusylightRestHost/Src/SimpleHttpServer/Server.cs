@@ -34,30 +34,14 @@ namespace BusylightRestHost.SimpleHttpServer
         private readonly Logger _logger;
         private readonly Dictionary<string, Route> _routes;
 
-        public Server(int port, string address = "127.0.0.1")
+        public Server(int port, string address = "localhost")
         {
-            _addresses = new List<string>();
-
             ValidateHttpListenerSupported();
-            AppendLocalhostAliases(address);
-            _addresses.Add(address);
-            _port = port;
             _logger = Logger.GetLogger();
+            _addresses = new List<string> {address};
+            _port = port;
             _listener = new HttpListener();
             _routes = new Dictionary<string, Route>();
-        }
-
-        private void AppendLocalhostAliases(string address)
-        {
-            switch (address)
-            {
-                case "127.0.0.1":
-                    _addresses.Add("localhost");
-                    break;
-                case "localhost":
-                    _addresses.Add("127.0.0.1");
-                    break;
-            }
         }
 
         private static void ValidateHttpListenerSupported()
@@ -75,7 +59,7 @@ namespace BusylightRestHost.SimpleHttpServer
             ThreadPool.QueueUserWorkItem(o =>
             {
                 _logger.Debug("SimpleHttpServer running...");
-                try
+                CatchErrors(() =>
                 {
                     while (_listener.IsListening)
                     {
@@ -86,14 +70,10 @@ namespace BusylightRestHost.SimpleHttpServer
                                 return;
                             }
 
-                            HandleRequest(context);
+                            CatchErrors(() => { HandleRequest(context); }, "Unexpected error");
                         }, _listener.GetContext());
                     }
-                }
-                catch (Exception e)
-                {
-                    _logger.Error(e, "Failed to handle request");
-                }
+                }, "Failed to handle request");
             });
         }
 
@@ -105,11 +85,8 @@ namespace BusylightRestHost.SimpleHttpServer
                 var buffer = Encoding.UTF8.GetBytes(response.Body);
                 context.Response.StatusCode = response.HttpCode;
                 context.Response.ContentLength64 = buffer.Length;
-                foreach (var header in response.Headers)
-                {
-                    context.Response.Headers.Add(header.Key, header.Value);
-                }
-
+                context.Response.ContentType = response.ContentType;
+                CatchErrors(() => { AppendHeaders(context, response); }, "Failed to append response headers");
                 context.Response.OutputStream.Write(buffer, 0, buffer.Length);
                 LogResponse(context);
             }
@@ -120,7 +97,16 @@ namespace BusylightRestHost.SimpleHttpServer
             }
             finally
             {
+                context.Response.OutputStream.Flush();
                 context.Response.OutputStream.Close();
+            }
+        }
+
+        private static void AppendHeaders(HttpListenerContext context, Response response)
+        {
+            foreach (var header in response.Headers)
+            {
+                context.Response.Headers.Add(header.Key, header.Value);
             }
         }
 
@@ -176,6 +162,18 @@ namespace BusylightRestHost.SimpleHttpServer
         private static HttpMethod ParseMethod(string httpMethod)
         {
             return (HttpMethod) Enum.Parse(typeof(HttpMethod), httpMethod, true);
+        }
+
+        private void CatchErrors(System.Action method, string message)
+        {
+            try
+            {
+                method.Invoke();
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, message);
+            }
         }
 
         public void RegisterPath(HttpMethod method, string path, RequestHandler handler)
