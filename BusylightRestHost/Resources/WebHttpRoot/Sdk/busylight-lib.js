@@ -137,6 +137,13 @@
             TelephonePickMeUp: 'TelephonePickMeUp',
             IM1: 'IM1',
             IM2: 'IM2'
+        },
+        soundVolume: {
+            Mute: 'Mute',
+            Low: 'Low',
+            Middle: 'Middle',
+            High: 'High',
+            Max: 'Max'
         }
     }
 })();

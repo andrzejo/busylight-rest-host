@@ -40,10 +40,35 @@ namespace BusylightRestHost.Action
             }
             catch (Exception e)
             {
-                throw new ArgumentException($"Failed to parse color {color}.", e);
+                throw new ActionException($"Failed to parse color {color}.", e);
             }
 
-            throw new ArgumentException($"Invalid color value '{color}'.");
+            throw new ActionException($"Invalid color value '{color}'.");
+        }
+
+        public BusylightSoundClip GetSound(string parameter = "sound")
+        {
+            var sound = GetValue(parameter);
+            if (Enum.TryParse(sound, out BusylightSoundClip clip))
+            {
+                return clip;
+            }
+
+            var sounds = string.Join(", ", Enum.GetNames(typeof(BusylightSoundClip)));
+            throw new ActionException($"Invalid sound parameter value: '{sound}'. Sound must be one of: '{sounds}'.");
+        }
+
+        public BusylightVolume GetVolume(string parameter = "volume")
+        {
+            var soundVolume = GetValue(parameter);
+            if (Enum.TryParse(soundVolume, out BusylightVolume volume))
+            {
+                return volume;
+            }
+
+            var volumes = string.Join(", ", Enum.GetNames(typeof(BusylightVolume)));
+            throw new ActionException(
+                $"Invalid sound parameter value: '{soundVolume}'. Sound must be one of: '{volumes}'.");
         }
     }
 }

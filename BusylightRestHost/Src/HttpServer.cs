@@ -78,7 +78,7 @@ namespace BusylightRestHost
         {
             _server.Start();
         }
-        
+
         public void Stop()
         {
             _server.Stop();
