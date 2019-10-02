@@ -142,7 +142,7 @@ namespace BusylightRestHost.SimpleHttpServer
             catch (Exception e)
             {
                 _logger.Error(e, $"Failed to handle request {context.Request.HttpMethod} {path}.");
-                return Response.Respond500();
+                return Response.Respond500($"Failed to handle request {context.Request.HttpMethod} {path}. Error: {e.Message}");
             }
         }
 

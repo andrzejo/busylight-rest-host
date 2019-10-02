@@ -24,9 +24,9 @@ namespace BusylightRestHost.SimpleHttpServer
             return this;
         }
 
-        public static Response Respond500()
+        public static Response Respond500(string body = "")
         {
-            return RespondCode(500);
+            return RespondCode(500, body);
         }
 
         public static Response Respond404()
@@ -34,10 +34,11 @@ namespace BusylightRestHost.SimpleHttpServer
             return RespondCode(404);
         }
 
-        public static Response RespondCode(int code)
+        public static Response RespondCode(int code, string body = "")
         {
             return new Response
             {
+                Body = body,
                 HttpCode = code
             };
         }
