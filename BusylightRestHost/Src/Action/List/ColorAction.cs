@@ -4,7 +4,7 @@ namespace BusylightRestHost.Action.List
 {
     public class ColorAction : Action
     {
-        public ColorAction(ISDK sdk, ActionParameters parameters) : base(sdk, parameters)
+        public ColorAction(SDK sdk, ActionParameters parameters) : base(sdk, parameters)
         {
         }
 

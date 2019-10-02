@@ -34,7 +34,7 @@
 
     function sendMessageToParent(message) {
         if (window && window.parent && window.parent.postMessage) {
-            window.parent.postMessage(message, '*'); //todo: origin?
+            window.parent.postMessage(message, '*');
         }
     }
 
@@ -61,6 +61,7 @@
     }
 
     function receiveMessage(event) {
+        //todo: handle origin
         sendAction(event.data);
     }
 

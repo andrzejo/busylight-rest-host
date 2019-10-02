@@ -4,7 +4,7 @@ namespace BusylightRestHost.Action.List
 {
     public class AlertAction : Action
     {
-        public AlertAction(ISDK sdk, ActionParameters parameters) : base(sdk, parameters)
+        public AlertAction(SDK sdk, ActionParameters parameters) : base(sdk, parameters)
         {
         }
 

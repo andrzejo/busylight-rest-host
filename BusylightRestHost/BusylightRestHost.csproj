@@ -111,6 +111,7 @@
     <Compile Include="Src\Action\Factory.cs" />
     <Compile Include="Src\Action\IAction.cs" />
     <Compile Include="Src\Action\List\AlertAction.cs" />
+    <Compile Include="Src\Action\List\BlinkAction.cs" />
     <Compile Include="Src\Action\List\ColorAction.cs" />
     <Compile Include="Src\Action\List\VersionAction.cs" />
     <Compile Include="Src\Action\List\VersionTO.cs" />

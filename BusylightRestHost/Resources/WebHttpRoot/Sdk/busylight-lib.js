@@ -62,6 +62,11 @@
 
         function receiveMessage(message) {
             var response = message.data;
+
+            if (message.origin !== host) {
+                return;
+            }
+
             if (response.success) {
                 if (response.action.action === 'version') {
                     available = true;
@@ -110,7 +115,7 @@
         };
 
         this.off = function () {
-            send('off')
+            send('color', {color: '#000000'})
         };
 
         window.addEventListener("message", receiveMessage, false);

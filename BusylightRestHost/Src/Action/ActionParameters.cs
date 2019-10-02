@@ -70,5 +70,16 @@ namespace BusylightRestHost.Action
             throw new ActionException(
                 $"Invalid sound parameter value: '{soundVolume}'. Sound must be one of: '{volumes}'.");
         }
+
+        public int GetInt(string parameter = "number")
+        {
+            var intValue = GetValue(parameter);
+            if (int.TryParse(intValue, out var value))
+            {
+                return value;
+            }
+
+            throw new ActionException($"Invalid parameter value: '{intValue}'. Parameter '{parameter}' must be valid number.");
+        }
     }
 }

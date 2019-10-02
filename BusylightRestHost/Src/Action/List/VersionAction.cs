@@ -12,7 +12,7 @@ namespace BusylightRestHost.Action.List
             _version = overridenVersion ?? Version.Get();
         }
 
-        public VersionAction(ISDK sdk, ActionParameters parameters) : base(sdk, parameters)
+        public VersionAction(SDK sdk, ActionParameters parameters) : base(sdk, parameters)
         {
             _version = Version.Get();
         }

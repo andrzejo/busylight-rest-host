@@ -15,7 +15,7 @@ namespace BusylightRestHost
         public static string GetAbout()
         {
             return
-                $"Kuando™ BUSYLIGHT device to web browser integration app.\n\nFor more information visit documentation page {DocsUrl}." +
+                $"Kuando™ BUSYLIGHT device web browser integration app.\n\nFor more information visit documentation page {DocsUrl}." +
                 "\n\nNote that this application is Open Source project, NOT OFFICIAL Kuando software.\n\nCopyright (c) Andrzej Oczkowicz 2019";
         }
 
