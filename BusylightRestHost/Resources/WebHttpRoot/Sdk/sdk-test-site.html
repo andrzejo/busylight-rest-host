@@ -6,15 +6,29 @@
     <script src="busylight-lib.js"></script>
 </head>
 <body>
+<style>
+    body {
+        font-family: monospace;
+    }
 
-Click to test Busylight
+    .label {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
 
+    .errors {
+        margin-top: 20px;
+        color: darkred;
+    }
+
+</style>
 <script>
     window.onload = function () {
         var busylight = ThuliumBusylight.setup().onLibReady(function () {
             console.log('Lib ready, ver: ' + busylight.getHostAppVersion())
         }).onError(function (error) {
-            console.error('BL:', error);
+            console.error('BusyLight initialization error:', error);
+            document.getElementById('errors').innerHTML += '<strong>Error: </strong>' + error.message + "<br/>";
         });
 
         function click(id, handler) {
@@ -39,13 +53,18 @@ Click to test Busylight
 
     };
 </script>
-<button id="test-alert">ALERT</button>
-<button id="test-color">COLOR</button>
-<button id="test-blink">BLINK</button>
-<button id="test-off">OFF</button>
 
+<div class="label">
+    Click to test Busylight
+</div>
+<div class="buttons">
+    <button id="test-alert">ALERT</button>
+    <button id="test-color">COLOR</button>
+    <button id="test-blink">BLINK</button>
+    <button id="test-off">OFF</button>
+</div>
 
-<div id="errors">
+<div id="errors" class="errors">
 
 </div>
 </body>
