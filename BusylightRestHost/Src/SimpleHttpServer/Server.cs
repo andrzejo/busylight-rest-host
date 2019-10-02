@@ -113,7 +113,7 @@ namespace BusylightRestHost.SimpleHttpServer
         private void LogResponse(HttpListenerContext context)
         {
             var response = context.Response;
-            var type = response.ContentType ?? response.Headers[HttpRequestHeader.ContentType];
+            var type = response.ContentType ?? response.Headers[HttpRequestHeader.ContentType] ?? "text/plain";
             var log =
                 $"Serve '{context.Request.Url.AbsolutePath}' [HTTP {response.StatusCode}, size: {response.ContentLength64}, content-type: {type}]";
             _logger.Debug(log);
