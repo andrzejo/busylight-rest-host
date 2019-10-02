@@ -79,7 +79,20 @@ namespace BusylightRestHost.Action
                 return value;
             }
 
-            throw new ActionException($"Invalid parameter value: '{intValue}'. Parameter '{parameter}' must be valid number.");
+            throw new ActionException(
+                $"Invalid parameter value: '{intValue}'. Parameter '{parameter}' must be valid number.");
+        }
+
+        public override string ToString()
+        {
+            var toString = "BusylightRestHost.Action.ActionParameters(";
+            foreach (var parameter in _parameters)
+            {
+                toString += parameter.Key + ": '" + parameter.Value + "', ";
+            }
+
+            char[] charsToTrim = {',', ' '};
+            return toString.Trim(charsToTrim) + ")";
         }
     }
 }

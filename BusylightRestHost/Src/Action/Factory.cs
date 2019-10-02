@@ -32,6 +32,7 @@ namespace BusylightRestHost.Action
                 throw new ArgumentException(message);
             }
 
+            Logger.GetLogger().Debug("Create action: " + data.GetParameters());
             return (IAction) Activator.CreateInstance(classType, _libProvider.Instance(), data.GetParameters());
         }
     }

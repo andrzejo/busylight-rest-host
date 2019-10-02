@@ -6,6 +6,9 @@
     <script src="busylight-lib.js"></script>
 </head>
 <body>
+
+Click to test Busylight
+
 <script>
     window.onload = function () {
         var busylight = ThuliumBusylight.setup().onLibReady(function () {
@@ -14,12 +17,36 @@
             console.error('BL:', error);
         });
 
-        document.getElementById('test').addEventListener('click', function () {
-            busylight.color('#ff0000');
+        function click(id, handler) {
+            document.getElementById(id).addEventListener('click', handler);
+        }
+
+        click('test-alert', function () {
             busylight.alert('#ff0000', ThuliumBusylight.sounds.Funky, ThuliumBusylight.soundVolume.High);
-        })
+        });
+
+        click('test-color', function () {
+            busylight.color('#ff0000');
+        });
+
+        click('test-blink', function () {
+            busylight.blink('#ff0000', 5, 5);
+        });
+
+        click('test-off', function () {
+            busylight.off();
+        });
+
     };
 </script>
-<button id="test">TEST</button>
+<button id="test-alert">ALERT</button>
+<button id="test-color">COLOR</button>
+<button id="test-blink">BLINK</button>
+<button id="test-off">OFF</button>
+
+
+<div id="errors">
+
+</div>
 </body>
 </html>
