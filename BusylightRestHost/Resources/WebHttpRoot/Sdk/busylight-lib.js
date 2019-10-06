@@ -7,10 +7,11 @@
 
     var Busylight = function (options) {
         var appendTo = options['appendTo'] || document.body;
+        var transport = options['transport'] || 'display'; // or 'active' - mixed active/display content
         var host = options['host'] || 'http://localhost:5748';
         var hostVersion = null;
         var available = false;
-        var frameElement = false;
+        var transportElement;
         var callbacks = {
             error: dummy,
             response: dummy,
@@ -25,10 +26,12 @@
         }
 
         function createIframe() {
-            frameElement = document.createElement('iframe');
-            frameElement.src = host + "/communication-frame.html";
-            frameElement.style.display = 'none';
-            frameElement.onload = function () {
+            window.addEventListener("message", receiveMessage, false);
+
+            transportElement = document.createElement('iframe');
+            transportElement.src = host + "/communication-frame.html";
+            transportElement.style.display = 'none';
+            transportElement.onload = function () {
                 send('version');
                 setTimeout(function () {
                     if (!available) {
@@ -36,11 +39,47 @@
                     }
                 }, 4000);
             };
-            frameElement.onerror = function () {
+            transportElement.onerror = function () {
                 available = false;
                 communicationError();
             };
-            appendTo.appendChild(frameElement);
+        }
+
+        function parseImgData() {
+            
+            //alert('a');
+        }
+
+        function createImage() {
+            transportElement = document.createElement('img');
+            transportElement.style.display = 'none';
+            transportElement.onload = function () {
+                debugger
+                available = true;
+                parseImgData();
+            };
+            transportElement.onerror = function () {
+                debugger
+                available = false;
+                communicationError();
+            };
+
+            send('version');
+
+            setTimeout(function () {
+                if (!available) {
+                    communicationError();
+                }
+            }, 4000);
+        }
+
+        function createTransportElement() {
+            if (transport === 'active') {
+                createIframe();
+            } else {
+                createImage();
+            }
+            appendTo.appendChild(transportElement);
         }
 
         function packParameters(params) {
@@ -53,10 +92,34 @@
             return result;
         }
 
+        function createActionObject(action, params) {
+            var parameters = packParameters(params || {});
+            return {action: action, parameters: parameters};
+        }
+
+        function sendViaIframe(action, params) {
+            if (transportElement && transportElement.contentWindow) {
+                transportElement.contentWindow.postMessage(createActionObject(action, params), '*')
+            } else {
+                communicationError();
+            }
+        }
+
+        function sendViaImg(action, params) {
+            if (transportElement) {
+                var url = host + '/passive_action'
+                    + '?action=' + encodeURIComponent(JSON.stringify(createActionObject(action, params)));
+                transportElement.src = url;
+            } else {
+                communicationError();
+            }
+        }
+
         function send(action, params) {
-            if (frameElement && frameElement.contentWindow) {
-                var parameters = packParameters(params || {});
-                frameElement.contentWindow.postMessage({action: action, parameters: parameters}, '*')
+            if (transport === 'active') {
+                sendViaIframe(action, params);
+            } else {
+                sendViaImg(action, params);
             }
         }
 
@@ -118,8 +181,7 @@
             send('color', {color: '#000000'})
         };
 
-        window.addEventListener("message", receiveMessage, false);
-        createIframe();
+        createTransportElement();
     };
 
     function setup(options) {

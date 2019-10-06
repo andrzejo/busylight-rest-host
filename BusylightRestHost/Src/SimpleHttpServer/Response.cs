@@ -53,6 +53,14 @@ namespace BusylightRestHost.SimpleHttpServer
             return Respond(body, Json);
         }
 
+        public static Response RespondSvg(string result)
+        {
+            var body = $@"<svg viewBox='0 0 0 0' xmlns='http://www.w3.org/2000/svg'>
+                       <text y='75' font-size='100' font-family='serif'><![CDATA[{result}]]></text>
+                </svg>";
+            return Respond(body, "image/svg+xml");
+        }
+
         public static Response Respond(string body, string contentType = Plain)
         {
             return new Response

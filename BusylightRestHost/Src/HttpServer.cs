@@ -22,6 +22,7 @@ namespace BusylightRestHost
 
             _server.RegisterPath(HttpMethod.Get, "/", WelcomeMessageHandler);
             _server.RegisterPath(HttpMethod.Post, "/action", RunActionHandler);
+            _server.RegisterPath(HttpMethod.Get, "/passive_action", RunPassiveActionHandler);
             RegisterStaticResources();
         }
 
@@ -36,7 +37,15 @@ namespace BusylightRestHost
             var busylightAction = ActionData.FromJson(actionDataJson);
             return Response.RespondJson(_busylightController.RunAction(busylightAction));
         }
-
+        
+        private Response RunPassiveActionHandler(HttpListenerRequest request, HttpListenerContext unused)
+        {
+            var actionDataJson = request.QueryString["action"];
+            var busylightAction = ActionData.FromJson(actionDataJson);
+            var result = _busylightController.RunAction(busylightAction);
+            return Response.RespondSvg(result);
+        }
+        
         private void RegisterStaticResources()
         {
             foreach (var resource in Resources.AllResources())

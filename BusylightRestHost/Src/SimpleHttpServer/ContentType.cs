@@ -8,6 +8,7 @@ namespace BusylightRestHost.SimpleHttpServer
         public const string Plain = "text/plain";
         public const string Js = "application/javascript";
         public const string Json = "application/json";
+        public const string Css = "text/css";
 
 
         private static readonly Dictionary<string, string> ExtContentTypes = new Dictionary<string, string>
@@ -15,7 +16,8 @@ namespace BusylightRestHost.SimpleHttpServer
             {"js", Js},
             {"html", Html},
             {"txt", Plain},
-            {"json", Json}
+            {"json", Json},
+            {"css", Css}
         };
 
         public static string ForExtension(string extension)
