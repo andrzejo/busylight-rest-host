@@ -155,14 +155,12 @@
     <Content Include="..\BusylightSdk\BusylightSDK.tlb">
       <Link>BusylightSDK.tlb</Link>
     </Content>
-    <Content Include="Resources\WebHttpRoot\t.css" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\version" />
     <EmbeddedResource Include="Resources\icon.ico" />
     <EmbeddedResource Include="Resources\WebHttpRoot\communication-frame.html" />
     <EmbeddedResource Include="Resources\WebHttpRoot\internal.js" />
-    <EmbeddedResource Include="Resources\WebHttpRoot\t.css" />
     <EmbeddedResource Include="Resources\WebHttpRoot\Sdk\busylight-lib.js" />
     <EmbeddedResource Include="Resources\WebHttpRoot\Sdk\sdk-test-site.html" />
   </ItemGroup>
