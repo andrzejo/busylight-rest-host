@@ -131,6 +131,7 @@
     <Compile Include="Src\Utils\Autostart.cs" />
     <Compile Include="Src\Utils\Dialogs.cs" />
     <Compile Include="Src\Utils\Json.cs" />
+    <Compile Include="Src\Utils\Settings.cs" />
     <Compile Include="Src\Utils\Streams.cs" />
     <Compile Include="Src\Version.cs" />
     <None Include="packages.config" />

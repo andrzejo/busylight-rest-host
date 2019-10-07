@@ -10,12 +10,14 @@ namespace BusylightRestHost
         private readonly NotifyIcon _notifyIcon;
         private readonly ContextMenu _contextMenu;
         private readonly Autostart _autostart;
+        private readonly Settings _settings;
 
         public TrayMenu()
         {
             _contextMenu = new ContextMenu();
             _contextMenu.Popup += MenuPopup;
             _autostart = new Autostart();
+            _settings = new Settings();
 
             AddItem(ApplicationText.GetAppHint(), AboutMenuItem_Click);
             AddItem("-");
@@ -23,6 +25,7 @@ namespace BusylightRestHost
             AddItem("Open documentation", OpenDocsMenuItem_Click);
             AddItem("-");
             AddItem("Start app with Windows", SetupAutostartMenuItem_Click, "autostart");
+            AddItem("Show notifications", SetupShowNotificationsMenuItem_Click, "show_notifications");
             AddItem("-");
             AddItem("E&xit", ExitMenuItem_Click);
 
@@ -33,10 +36,16 @@ namespace BusylightRestHost
                 Visible = true,
                 Icon = new Icon(GetType(), "Resources.icon.ico")
             };
-            
+
             _notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
             EventBus.GetInstance()
-                .Bind(Events.SHOW_TIP_EVENT, (s, dictionary) => { SetBalloonTip(dictionary["text"]); });
+                .Bind(Events.SHOW_TIP_EVENT, (s, dictionary) =>
+                {
+                    if (_settings.EnableNotifications)
+                    {
+                        SetBalloonTip(dictionary["text"]);
+                    }
+                });
         }
 
         private void SetBalloonTip(string text)
@@ -54,6 +63,11 @@ namespace BusylightRestHost
                 if (item.Name == "autostart")
                 {
                     item.Checked = _autostart.IsEnabled();
+                }
+
+                if (item.Name == "show_notifications")
+                {
+                    item.Checked = _settings.EnableNotifications;
                 }
             }
         }
@@ -87,6 +101,12 @@ namespace BusylightRestHost
         private void SetupAutostartMenuItem_Click(object sender, EventArgs e)
         {
             _autostart.Toggle();
+        }
+
+        private void SetupShowNotificationsMenuItem_Click(object sender, EventArgs e)
+        {
+            _settings.EnableNotifications = !_settings.EnableNotifications;
+            _settings.Save();
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)
