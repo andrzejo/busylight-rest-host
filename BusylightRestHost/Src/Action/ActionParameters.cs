@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text.RegularExpressions;
 using Busylight;
 
@@ -44,6 +45,21 @@ namespace BusylightRestHost.Action
             }
 
             throw new ActionException($"Invalid color value '{color}'.");
+        }
+
+        public string GetColorName(string parameter = "color")
+        {
+            var color = GetValue(parameter);
+            try
+            {
+                var html = color.Replace("#", "#ff");
+                return ColorTranslator.FromHtml(html).Name;
+            }
+            catch (Exception e)
+            {
+                Logger.GetLogger().Error(e, $"Failed to get color name: {color}");
+                return color;
+            }
         }
 
         public BusylightSoundClip GetSound(string parameter = "sound")

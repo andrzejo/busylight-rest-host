@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -58,7 +59,7 @@ namespace BusylightRestHost.SimpleHttpServer
             _listener.Start();
             ThreadPool.QueueUserWorkItem(o =>
             {
-                _logger.Debug("SimpleHttpServer running...");
+                _logger.Debug($"SimpleHttpServer running: Scheme http, address: {string.Join(", ", _addresses.ToArray())}, port: {_port}");
                 CatchErrors(() =>
                 {
                     while (_listener.IsListening)
@@ -142,7 +143,8 @@ namespace BusylightRestHost.SimpleHttpServer
             catch (Exception e)
             {
                 _logger.Error(e, $"Failed to handle request {context.Request.HttpMethod} {path}.");
-                return Response.Respond500($"Failed to handle request {context.Request.HttpMethod} {path}. Error: {e.Message}");
+                return Response.Respond500(
+                    $"Failed to handle request {context.Request.HttpMethod} {path}. Error: {e.Message}");
             }
         }
 

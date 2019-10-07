@@ -33,6 +33,18 @@ namespace BusylightRestHost
                 Visible = true,
                 Icon = new Icon(GetType(), "Resources.icon.ico")
             };
+            
+            _notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+            EventBus.GetInstance()
+                .Bind(Events.SHOW_TIP_EVENT, (s, dictionary) => { SetBalloonTip(dictionary["text"]); });
+        }
+
+        private void SetBalloonTip(string text)
+        {
+            _notifyIcon.BalloonTipTitle = ApplicationText.GetAutostartText();
+            _notifyIcon.BalloonTipText = text;
+            _notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+            _notifyIcon.ShowBalloonTip(5000);
         }
 
         private void MenuPopup(System.Object sender, System.EventArgs e)

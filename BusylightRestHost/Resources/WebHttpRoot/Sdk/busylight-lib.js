@@ -9,14 +9,16 @@
         var appendTo = options['appendTo'] || document.body;
         var transport = options['transport'] || 'display'; // or 'active' - mixed active/display content
         var host = options['host'] || 'http://localhost:5748';
-        var hostVersion = null;
+        var hostVersion = 'n/a';
         var available = false;
         var transportElement;
+        var self = this;
         var callbacks = {
             error: dummy,
             response: dummy,
             libReady: dummy
         };
+
 
         function communicationError() {
             callbacks.error({
@@ -46,20 +48,19 @@
         }
 
         function parseImgData() {
-            
-            //alert('a');
         }
 
         function createImage() {
             transportElement = document.createElement('img');
             transportElement.style.display = 'none';
             transportElement.onload = function () {
-                debugger
+                if (!available){
+                    callbacks.libReady(self);
+                }
                 available = true;
                 parseImgData();
             };
             transportElement.onerror = function () {
-                debugger
                 available = false;
                 communicationError();
             };
@@ -134,7 +135,7 @@
                 if (response.action.action === 'version') {
                     available = true;
                     hostVersion = response.response.version;
-                    callbacks.libReady(this);
+                    callbacks.libReady(self);
                 }
                 callbacks.response(response);
             } else {
@@ -214,5 +215,3 @@
         }
     }
 })();
-
-

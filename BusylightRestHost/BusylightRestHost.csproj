@@ -118,6 +118,8 @@
     <Compile Include="Src\ApplicationText.cs" />
     <Compile Include="Src\BusylightController.cs" />
     <Compile Include="Src\BusylightLibProvider.cs" />
+    <Compile Include="Src\EventBus.cs" />
+    <Compile Include="Src\Events.cs" />
     <Compile Include="Src\HttpServer.cs" />
     <Compile Include="Src\SimpleHttpServer\ContentType.cs" />
     <Compile Include="Src\SimpleHttpServer\Response.cs" />

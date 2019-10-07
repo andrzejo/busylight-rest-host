@@ -11,6 +11,7 @@ namespace BusylightRestHost.Action.List
         public override string Execute()
         {
             var color = _parameters.GetColor();
+            Events.GetInstance().TriggerShowTip($"Set {_parameters.GetColorName().ToLower()} color.");
             _sdk.Light(color);
             return "";
         }
