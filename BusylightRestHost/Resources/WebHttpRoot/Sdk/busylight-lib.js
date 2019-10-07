@@ -19,7 +19,6 @@
             libReady: dummy
         };
 
-
         function communicationError() {
             callbacks.error({
                 success: false,
