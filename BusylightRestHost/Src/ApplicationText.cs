@@ -23,5 +23,10 @@ namespace BusylightRestHost
         {
             return $"Busylight - Browser Integration Host (ver {Version.Get()})";
         }
+
+        public static string GetAutostartText()
+        {
+            return "Busylight Integration Host";
+        }
     }
 }

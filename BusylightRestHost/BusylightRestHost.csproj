@@ -126,6 +126,7 @@
     <Compile Include="Src\Program.cs" />
     <Compile Include="Src\Resources.cs" />
     <Compile Include="Src\TrayMenu.cs" />
+    <Compile Include="Src\Utils\Autostart.cs" />
     <Compile Include="Src\Utils\Dialogs.cs" />
     <Compile Include="Src\Utils\Json.cs" />
     <Compile Include="Src\Utils\Streams.cs" />
