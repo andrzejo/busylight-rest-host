@@ -52,6 +52,7 @@ namespace BusylightRestHost
 
         private void SetBalloonTip(string text, ToolTipIcon icon)
         {
+            _notifyIcon.Visible = true;
             _notifyIcon.BalloonTipTitle = ApplicationText.GetAutostartText();
             _notifyIcon.BalloonTipText = text;
             _notifyIcon.BalloonTipIcon = icon;
