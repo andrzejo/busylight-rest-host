@@ -16,7 +16,7 @@ namespace BusylightRestHost.Action
 
         private void ValidateDeviceExists()
         {
-            if (_sdk.GetAttachedBusylightDeviceList().Length == 0)
+            if (_sdk != null && _sdk.GetAttachedBusylightDeviceList().Length == 0)
             {
                 var message = "No Busylight device.";
                 Logger.GetLogger().Warn(message);
