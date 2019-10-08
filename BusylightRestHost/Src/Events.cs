@@ -12,11 +12,12 @@ namespace BusylightRestHost
             return _instance ?? (_instance = new Events());
         }
         
-        public void TriggerShowTip(string text)
+        public void TriggerShowTip(string text, string type = "info")
         {
             var parameters = new Dictionary<string, string>()
             {
-                {"text", text}
+                {"text", text},
+                {"type", type}
             };
             EventBus.GetInstance().Trigger(SHOW_TIP_EVENT, parameters);
         }

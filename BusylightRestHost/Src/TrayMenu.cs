@@ -34,25 +34,27 @@ namespace BusylightRestHost
                 ContextMenu = _contextMenu,
                 Text = ApplicationText.GetAppHint(),
                 Visible = true,
-                Icon = new Icon(GetType(), "Resources.icon.ico")
+                Icon = new Icon(GetType(), "Resources.icon.ico"),
+                BalloonTipIcon = ToolTipIcon.Info
             };
 
-            _notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
             EventBus.GetInstance()
                 .Bind(Events.SHOW_TIP_EVENT, (s, dictionary) =>
                 {
                     if (_settings.EnableNotifications)
                     {
-                        SetBalloonTip(dictionary["text"]);
+                        var icon = dictionary["type"] == "error" ? ToolTipIcon.Error : ToolTipIcon.Info;
+                        SetBalloonTip(dictionary["text"], icon);
                     }
                 });
         }
 
-        private void SetBalloonTip(string text)
+
+        private void SetBalloonTip(string text, ToolTipIcon icon)
         {
             _notifyIcon.BalloonTipTitle = ApplicationText.GetAutostartText();
             _notifyIcon.BalloonTipText = text;
-            _notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+            _notifyIcon.BalloonTipIcon = icon;
             _notifyIcon.ShowBalloonTip(5000);
         }
 

@@ -11,6 +11,18 @@ namespace BusylightRestHost.Action
         {
             _sdk = sdk;
             _parameters = parameters;
+            ValidateDeviceExists();
+        }
+
+        private void ValidateDeviceExists()
+        {
+            if (_sdk.GetAttachedBusylightDeviceList().Length == 0)
+            {
+                var message = "No Busylight device.";
+                Logger.GetLogger().Warn(message);
+                Events.GetInstance().TriggerShowTip(message, "error");
+                throw new ActionException(message);
+            }
         }
 
         public abstract string Execute();

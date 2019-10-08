@@ -21,7 +21,8 @@ namespace BusylightRestHost
             }
 
             new TrayMenu();
-            
+            new BusylightLibProvider().Instance();
+
             AppDomain.CurrentDomain.ProcessExit += (s, e) =>
             {
                 httpServer.Stop();
