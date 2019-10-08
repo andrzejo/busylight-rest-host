@@ -2,10 +2,11 @@
 
 set -eo pipefail
 
-echo "Installing NuGet packages..."
-nuget restore
+if [[ "$1" == "" ]]; then
+    echo "Specify release version (tag)";
+    exit 1
+fi
 
-echo "Building application..."
-msbuild /t:restore
-msbuild /p:Configuration=Release BusylightRestHost.sln /p:TargetFrameworkVersion=v4.7 /target:BusylightRestHost
-echo "Build completed."
+echo "Creating release '$1' "
+git tag "$1"
+git push origin --tags
