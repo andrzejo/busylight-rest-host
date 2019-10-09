@@ -12,7 +12,7 @@ namespace BusylightRestHost.Action.List
         {
             var color = _parameters.GetColor();
             var message = IsOffColor(color) ? "Disable Busylight" : $"Set {_parameters.GetColorName().ToLower()} color.";
-            Events.GetInstance().TriggerShowTip(message);
+            Events.GetInstance().TriggerAction(message);
             _sdk.Light(color);
             return "";
         }

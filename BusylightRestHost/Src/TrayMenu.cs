@@ -25,7 +25,10 @@ namespace BusylightRestHost
             AddItem("Open documentation", OpenDocsMenuItem_Click);
             AddItem("-");
             AddItem("Start app with Windows", SetupAutostartMenuItem_Click, "autostart");
-            AddItem("Show notifications", SetupShowNotificationsMenuItem_Click, "show_notifications");
+            AddItem("-");
+            AddItem("Show action notifications", SetupShowNotificationsMenuItem_Click, "EnableActionNotifications");
+            AddItem("Show device notifications", SetupShowNotificationsMenuItem_Click, "EnableDeviceNotifications");
+            AddItem("Show errors notifications", SetupShowNotificationsMenuItem_Click, "EnableErrorsNotifications");
             AddItem("-");
             AddItem("E&xit", ExitMenuItem_Click);
 
@@ -38,13 +41,20 @@ namespace BusylightRestHost
                 BalloonTipIcon = ToolTipIcon.Info
             };
 
+            BindNotificationEvent(Events.ACTION_EVENT, ToolTipIcon.Info, () => _settings.EnableActionNotifications);
+            BindNotificationEvent(Events.DEVICE_CHANGE_EVENT, ToolTipIcon.Info,
+                () => _settings.EnableDeviceNotifications);
+            BindNotificationEvent(Events.ERROR_EVENT, ToolTipIcon.Info, () => _settings.EnableErrorsNotifications);
+        }
+
+        private void BindNotificationEvent(string eventName, ToolTipIcon toolTipIcon, Func<bool> settingValueProvider)
+        {
             EventBus.GetInstance()
-                .Bind(Events.SHOW_TIP_EVENT, (s, dictionary) =>
+                .Bind(eventName, (s, dictionary) =>
                 {
-                    if (_settings.EnableNotifications)
+                    if (settingValueProvider())
                     {
-                        var icon = dictionary["type"] == "error" ? ToolTipIcon.Error : ToolTipIcon.Info;
-                        SetBalloonTip(dictionary["text"], icon);
+                        SetBalloonTip(dictionary["text"], toolTipIcon);
                     }
                 });
         }
@@ -59,7 +69,7 @@ namespace BusylightRestHost
             _notifyIcon.ShowBalloonTip(5000);
         }
 
-        private void MenuPopup(System.Object sender, System.EventArgs e)
+        private void MenuPopup(Object sender, EventArgs e)
         {
             foreach (MenuItem item in _contextMenu.MenuItems)
             {
@@ -67,10 +77,10 @@ namespace BusylightRestHost
                 {
                     item.Checked = _autostart.IsEnabled();
                 }
-
-                if (item.Name == "show_notifications")
+                
+                if (_settings.Exists(item.Name))
                 {
-                    item.Checked = _settings.EnableNotifications;
+                    item.Checked = (bool) _settings[item.Name];
                 }
             }
         }
@@ -108,7 +118,8 @@ namespace BusylightRestHost
 
         private void SetupShowNotificationsMenuItem_Click(object sender, EventArgs e)
         {
-            _settings.EnableNotifications = !_settings.EnableNotifications;
+            var menuItem = (MenuItem) sender;
+            _settings[menuItem.Name] = !(bool) _settings[menuItem.Name];
             _settings.Save();
         }
 

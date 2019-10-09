@@ -14,7 +14,7 @@ namespace BusylightRestHost.Action.List
             var color = _parameters.GetColor();
             var sound = _parameters.GetSound();
             var volume = _parameters.GetVolume();
-            Events.GetInstance().TriggerShowTip($"Alert with color {_parameters.GetColorName().ToLower()} and sound '{sound}', sound volume: {volume}.");
+            Events.GetInstance().TriggerAction($"Alert with color {_parameters.GetColorName().ToLower()} and sound '{sound}', sound volume: {volume}.");
             _sdk.Alert(color, sound, volume);
             return "";
         }

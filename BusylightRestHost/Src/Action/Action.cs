@@ -20,7 +20,7 @@ namespace BusylightRestHost.Action
             {
                 var message = "No Busylight device.";
                 Logger.GetLogger().Warn(message);
-                Events.GetInstance().TriggerShowTip(message, "error");
+                Events.GetInstance().TriggerShowError(message);
                 throw new ActionException(message);
             }
         }

@@ -42,7 +42,7 @@ namespace BusylightRestHost
             
             var message = (list.Length > _devicesCount) ? "Connected " + names.Last() : "Disconnected Busylight device";
             _devicesCount = list.Length;
-            Events.GetInstance().TriggerShowTip(message);
+            Events.GetInstance().TriggerDeviceChanged(message);
         }
     }
 }
