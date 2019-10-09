@@ -53,7 +53,7 @@
             transportElement = document.createElement('img');
             transportElement.style.display = 'none';
             transportElement.onload = function () {
-                if (!available){
+                if (!available) {
                     callbacks.libReady(self);
                 }
                 available = true;
@@ -108,7 +108,8 @@
         function sendViaImg(action, params) {
             if (transportElement) {
                 var url = host + '/passive_action'
-                    + '?action=' + encodeURIComponent(JSON.stringify(createActionObject(action, params)));
+                    + '?action=' + encodeURIComponent(JSON.stringify(createActionObject(action, params)))
+                    + '&id=' + Math.random().toString(36).substr(2, 9);
                 transportElement.src = url;
             } else {
                 communicationError();
