@@ -22,5 +22,5 @@ deploy:
     - BusylightRestHost/bin/Release/BusylightRestHost.exe.sha1
   skip_cleanup: true
   on:
-    repo: andrzejo/busylight-rest-host
+    repo: thuliumcc/busylight-rest-host
     tags: true
