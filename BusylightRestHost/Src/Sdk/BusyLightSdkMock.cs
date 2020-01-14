@@ -1,8 +1,14 @@
 using System;
+using System.Drawing;
+using System.Timers;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Busylight;
 using BusylightRestHost.Sdk;
+using Timer = System.Timers.Timer;
 
-namespace BusylightRestHost
+
+namespace BusylightRestHost.Sdk
 {
     class MockDevice : IBusylightDevice
     {
@@ -30,77 +36,139 @@ namespace BusylightRestHost
 
     public class BusyLightSdkMock : ISdk
     {
+        private readonly Form _form;
+        private readonly Label _label;
+        private Timer _timer;
+
+        public BusyLightSdkMock()
+        {
+            _form = new Form {Text = "Busylight Mock Window", BackColor = Color.White};
+            _label = new Label {AutoSize = true};
+            _form.Controls.Add(_label);
+            _form.Show();
+            _form.FormClosing += (sender, args) => { args.Cancel = args.CloseReason != CloseReason.ApplicationExitCall; };
+        }
+
+        private void SetupTimer(System.Action step1, int interval, System.Action step2)
+        {
+            _timer?.Close();
+            _timer = new Timer();
+            int tick = 0;
+            step1.Invoke();
+            _timer.Elapsed += (sender, args) =>
+            {
+                tick++;
+                Logger.GetLogger().Info($"Tick {tick}");
+                if (tick % 2 == 0)
+                {
+                    step1.Invoke();
+                }
+                else
+                {
+                    step2.Invoke();
+                }
+            };
+            _timer.Interval = interval;
+            _timer.Enabled = true;
+            _timer.AutoReset = true;
+        }
+
         public void Alert(BusylightColor color, BusylightSoundClip clip, BusylightVolume volume)
         {
-            log(message: $"Alert(color:{color}, clip:{clip}, volume:{volume})");
+            Action(message: $"Alert(color:{color}, clip:{clip}, volume:{volume})");
+            SetupTimer(() => { SetColor(color); }, 500, () => SetColor(0xff, 0xff, 0xff));
         }
 
         public void Alert(int red, int blue, int green, BusylightSoundClip clip, BusylightVolume volume)
         {
-            log(message: $"Alert(R:{red}, B:{blue}, G:{green}, clip:{clip}, volume:{volume})");
+            Action(message: $"Alert(R:{red}, B:{blue}, G:{green}, clip:{clip}, volume:{volume})");
+            SetupTimer(() => { SetColor(red, blue, green); }, 500, () => SetColor(0xff, 0xff, 0xff));
         }
 
         public void ColorWithFlash(int red, int blue, int green, int flashred, int flashblue, int flashgreen)
         {
-            log(message:
+            Action(message:
                 $"ColorWithFlash(R:{red}, B:{blue}, G:{green}, flashred:{flashred}, flashblue:{flashblue}, flashgreen:{flashgreen})");
+            SetupTimer(() => { SetColor(red, blue, green); }, 100, () => SetColor(flashred, flashblue, flashgreen));
         }
 
         public IBusylightDevice[] GetAttachedBusylightDeviceList()
         {
-            log(message: $"GetAttachedBusylightDeviceList()");
+            Action(message: $"GetAttachedBusylightDeviceList()");
             var device = new MockDevice();
             return new IBusylightDevice[] {device};
         }
 
         public void Jingle(BusylightColor color, BusylightJingleClip clip, BusylightVolume volume)
         {
-            log(message: $"Jingle(color:{color}, clip:{clip}, volume:{volume})");
+            Action(message: $"Jingle(color:{color}, clip:{clip}, volume:{volume})");
+            SetColor(color);
         }
 
         public void Jingle(int red, int blue, int green, BusylightJingleClip clip, BusylightVolume volume)
         {
-            log(message: $"Light(R:{red}, G:{blue}, B:{green})");
+            Action(message: $"Light(R:{red}, G:{blue}, B:{green})");
+            SetColor(red, blue, green);
         }
 
         public void Light(int red, int blue, int green)
         {
-            log(message: $"Light(R:{red}, G:{blue}, B:{green})");
+            Action(message: $"Light(R:{red}, G:{blue}, B:{green})");
+            SetColor(red, blue, green);
         }
 
         public void Light(BusylightColor color)
         {
-            log(message: $"Light(color:{color})");
+            Action(message: $"Light(color:{color})");
+            SetColor(color);
         }
 
         public void Pulse(BusylightColor color)
         {
-            log(message: $"Pulse(color:{color})");
+            Action(message: $"Pulse(color:{color})");
+            SetColor(color);
         }
 
         public void Pulse(PulseSequence pulseSequence)
         {
-            log(message: $"Pulse(pulseSequence:{pulseSequence})");
+            Action(message: $"Pulse(pulseSequence:{pulseSequence})");
         }
 
         public void Pulse(int red, int blue, int green)
         {
-            log(message: $"Pulse(R:{red}, G:{blue}, B:{green})");
+            Action(message: $"Pulse(R:{red}, G:{blue}, B:{green})");
+            SetColor(red, blue, green);
         }
 
         public void Blink(BusylightColor color, int ontime, int offtime)
         {
-            log(message: $"Blink(color:{color}, ontime:{ontime}, offtime:{offtime})");
+            Action(message: $"Blink(color:{color}, ontime:{ontime}, offtime:{offtime})");
+            SetupTimer(() => { SetColor(color); }, ontime, () => SetColor(0xff, 0xff, 0xff));
         }
 
         public void Blink(int red, int blue, int green, int ontime, int offtime)
         {
-            log(message: $"Blink(R:{red}, G:{blue}, B:{green}, ontime:{ontime}, offtime:{offtime})");
+            Action(message: $"Blink(R:{red}, G:{blue}, B:{green}, ontime:{ontime}, offtime:{offtime})");
+            SetupTimer(() => { SetColor(red, blue, green); }, ontime, () => SetColor(0xff, 0xff, 0xff));
         }
 
-        private void log(string message)
+        private void SetColor(int red, int blue, int green)
         {
+            _form.BackColor = Color.FromArgb(red, green, blue);
+        }
+
+        private void SetColor(BusylightColor color)
+        {
+            SetColor(color.RedRgbValue, color.BlueRgbValue, color.GreenRgbValue);
+        }
+
+        private void Action(string message)
+        {
+            _timer?.Close();
             Logger.GetLogger().Debug("BusyLightLibMock: " + message);
+            _label.Text = message;
+            _form.TopMost = true;
+            _form.Visible = true;
         }
 
         public event BusylightChangedDelegate OnBusylightChanged;
