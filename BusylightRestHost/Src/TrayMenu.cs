@@ -77,7 +77,7 @@ namespace BusylightRestHost
                 {
                     item.Checked = _autostart.IsEnabled();
                 }
-                
+
                 if (_settings.Exists(item.Name))
                 {
                     item.Checked = (bool) _settings[item.Name];
@@ -103,12 +103,12 @@ namespace BusylightRestHost
 
         private void OpenTestPageMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(ApplicationText.GetTestPageUrl());
+            ProcessRunner.OpenUrl(ApplicationText.GetTestPageUrl());
         }
 
         private void OpenDocsMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(ApplicationText.DocsUrl);
+            ProcessRunner.OpenUrl(ApplicationText.DocsUrl);
         }
 
         private void SetupAutostartMenuItem_Click(object sender, EventArgs e)
