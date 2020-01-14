@@ -8,5 +8,6 @@ if [[ "$1" == "" ]]; then
 fi
 
 echo "Creating release '$1' "
+git push
 git tag "$1"
 git push origin --tags
