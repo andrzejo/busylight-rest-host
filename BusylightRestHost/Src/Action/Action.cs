@@ -1,13 +1,14 @@
 using Busylight;
+using BusylightRestHost.Sdk;
 
 namespace BusylightRestHost.Action
 {
     public abstract class Action : IAction
     {
-        protected readonly SDK _sdk;
+        protected readonly ISdk _sdk;
         protected readonly ActionParameters _parameters;
 
-        protected Action(SDK sdk, ActionParameters parameters)
+        protected Action(ISdk sdk, ActionParameters parameters)
         {
             _sdk = sdk;
             _parameters = parameters;

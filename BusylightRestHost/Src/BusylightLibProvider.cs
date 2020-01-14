@@ -1,35 +1,48 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Busylight;
+using BusylightRestHost.Sdk;
 
 namespace BusylightRestHost
 {
     public interface IBusylightLibProvider
     {
-        SDK Instance();
+        ISdk Instance();
     }
 
     public class BusylightLibProvider : IBusylightLibProvider
     {
-        private static SDK _sdk;
+        private static ISdk _sdk;
         private static int _devicesCount = 0;
 
-        public SDK Instance()
+        public ISdk Instance()
         {
             if (_sdk == null)
             {
-                try
+                bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+                if (isWindows)
                 {
-                    _sdk = new SDK(true);
-                    _sdk.OnBusylightChanged += BusyLightChanged;
+                    try
+                    {
+                        Logger.GetLogger().Info("Windows platform detected, try to setup BusylightSDK.");
+                        _sdk = new BusyLightSdk();
+                        _sdk.OnBusylightChanged += BusyLightChanged;
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.GetLogger().Error(e, "Failed to create BusylightSDK.");
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    Logger.GetLogger().Error(e, "Failed to create BusylightSDK.");
+                    Logger.GetLogger().Info("Non-Windows platform detected, setup BusylightSDK mock.");
+                    _sdk = new BusyLightSdkMock();
+                    _sdk.OnBusylightChanged += BusyLightChanged;
+                    BusyLightChanged();
                 }
             }
-
             return _sdk;
         }
 

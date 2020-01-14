@@ -1,4 +1,5 @@
 using Busylight;
+using BusylightRestHost.Sdk;
 using BusylightRestHost.Utils;
 
 namespace BusylightRestHost.Action.List
@@ -12,7 +13,7 @@ namespace BusylightRestHost.Action.List
             _version = overridenVersion ?? Version.Get();
         }
 
-        public VersionAction(SDK sdk, ActionParameters parameters) : base(sdk, parameters)
+        public VersionAction(ISdk sdk, ActionParameters parameters) : base(sdk, parameters)
         {
             _version = Version.Get();
         }

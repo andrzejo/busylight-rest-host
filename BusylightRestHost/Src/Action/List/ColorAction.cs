@@ -1,10 +1,11 @@
 using Busylight;
+using BusylightRestHost.Sdk;
 
 namespace BusylightRestHost.Action.List
 {
     public class ColorAction : Action
     {
-        public ColorAction(SDK sdk, ActionParameters parameters) : base(sdk, parameters)
+        public ColorAction(ISdk sdk, ActionParameters parameters) : base(sdk, parameters)
         {
         }
 

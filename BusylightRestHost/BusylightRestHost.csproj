@@ -121,6 +121,9 @@
     <Compile Include="Src\EventBus.cs" />
     <Compile Include="Src\Events.cs" />
     <Compile Include="Src\HttpServer.cs" />
+    <Compile Include="Src\Sdk\BusyLightSdkMock.cs" />
+    <Compile Include="Src\Sdk\BusyLightSdk.cs" />
+    <Compile Include="Src\Sdk\ISdk.cs" />
     <Compile Include="Src\SimpleHttpServer\ContentType.cs" />
     <Compile Include="Src\SimpleHttpServer\Response.cs" />
     <Compile Include="Src\SimpleHttpServer\Server.cs" />

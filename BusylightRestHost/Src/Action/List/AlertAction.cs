@@ -1,11 +1,12 @@
 using System.Drawing;
 using Busylight;
+using BusylightRestHost.Sdk;
 
 namespace BusylightRestHost.Action.List
 {
     public class AlertAction : Action
     {
-        public AlertAction(SDK sdk, ActionParameters parameters) : base(sdk, parameters)
+        public AlertAction(ISdk sdk, ActionParameters parameters) : base(sdk, parameters)
         {
         }
 
