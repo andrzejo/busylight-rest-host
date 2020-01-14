@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Busylight;
 using BusylightRestHost.Sdk;
+using BusylightRestHost.Utils;
 
 namespace BusylightRestHost
 {
@@ -21,8 +22,9 @@ namespace BusylightRestHost
         {
             if (_sdk == null)
             {
-                bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-                if (isWindows)
+                var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+                var forceMock = AppArguments.forceMock();
+                if (isWindows && !forceMock)
                 {
                     try
                     {
@@ -37,12 +39,15 @@ namespace BusylightRestHost
                 }
                 else
                 {
-                    Logger.GetLogger().Info("Non-Windows platform detected, setup BusylightSDK mock.");
+                    Logger.GetLogger().Info(forceMock
+                        ? "--force-mock argument passed, setup BusylightSDK mock."
+                        : "Non-Windows platform detected, setup BusylightSDK mock.");
                     _sdk = new BusyLightSdkMock();
                     _sdk.OnBusylightChanged += BusyLightChanged;
                     BusyLightChanged();
                 }
             }
+
             return _sdk;
         }
 
@@ -52,7 +57,7 @@ namespace BusylightRestHost
             List<string> names = list.Select(device => device.ProductID + " ver " + device.FirmwareRelease).ToList();
             var devices = string.Join(", ", names.ToArray());
             Logger.GetLogger().Debug("BusyLightChanged " + devices);
-            
+
             var message = (list.Length > _devicesCount) ? "Connected " + names.Last() : "Disconnected Busylight device";
             _devicesCount = list.Length;
             Events.GetInstance().TriggerDeviceChanged(message);

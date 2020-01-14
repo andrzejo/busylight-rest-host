@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace BusylightRestHost.Utils
 {
@@ -13,22 +12,27 @@ namespace BusylightRestHost.Utils
             }
             catch
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    Process.Start(url);
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                if (xdgAvailable())
                 {
                     Process.Start("xdg-open", url);
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                {
-                    Process.Start("open", url);
                 }
                 else
                 {
                     throw;
                 }
+            }
+        }
+
+        private static bool xdgAvailable()
+        {
+            try
+            {
+                Process.Start("xdg-open", "--version");
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
