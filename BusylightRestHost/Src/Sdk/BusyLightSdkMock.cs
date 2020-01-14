@@ -1,10 +1,7 @@
 using System;
 using System.Drawing;
-using System.Timers;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using Busylight;
-using BusylightRestHost.Sdk;
 using Timer = System.Timers.Timer;
 
 
@@ -38,15 +35,23 @@ namespace BusylightRestHost.Sdk
     {
         private readonly Form _form;
         private readonly Label _label;
+        private readonly FlowLayoutPanel _panel;
         private Timer _timer;
 
         public BusyLightSdkMock()
         {
             _form = new Form {Text = "Busylight Mock Window", BackColor = Color.White};
             _label = new Label {AutoSize = true};
+            _panel = new FlowLayoutPanel {AutoSize = true};
+            _panel.Width = _form.Width;
+            _panel.Height = _form.Height - _label.Height;
             _form.Controls.Add(_label);
+            _form.Controls.Add(_panel);
             _form.Show();
-            _form.FormClosing += (sender, args) => { args.Cancel = args.CloseReason != CloseReason.ApplicationExitCall; };
+            _form.FormClosing += (sender, args) =>
+            {
+                args.Cancel = args.CloseReason != CloseReason.ApplicationExitCall;
+            };
         }
 
         private void SetupTimer(System.Action step1, int interval, System.Action step2)
@@ -58,7 +63,6 @@ namespace BusylightRestHost.Sdk
             _timer.Elapsed += (sender, args) =>
             {
                 tick++;
-                Logger.GetLogger().Info($"Tick {tick}");
                 if (tick % 2 == 0)
                 {
                     step1.Invoke();
@@ -89,7 +93,7 @@ namespace BusylightRestHost.Sdk
         {
             Action(message:
                 $"ColorWithFlash(R:{red}, B:{blue}, G:{green}, flashred:{flashred}, flashblue:{flashblue}, flashgreen:{flashgreen})");
-            SetupTimer(() => { SetColor(red, blue, green); }, 100, () => SetColor(flashred, flashblue, flashgreen));
+            SetupTimer(() => { SetColor(red, blue, green); }, 300, () => SetColor(flashred, flashblue, flashgreen));
         }
 
         public IBusylightDevice[] GetAttachedBusylightDeviceList()
@@ -154,7 +158,7 @@ namespace BusylightRestHost.Sdk
 
         private void SetColor(int red, int blue, int green)
         {
-            _form.BackColor = Color.FromArgb(red, green, blue);
+            _panel.BackColor = Color.FromArgb(red, green, blue);
         }
 
         private void SetColor(BusylightColor color)
