@@ -12,16 +12,14 @@ script:
 - mono packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe BusylightRestHost.Tests/BusylightRestHost.Tests.csproj
 - msbuild /p:Configuration=Release BusylightRestHost.sln /p:TargetFrameworkVersion=v4.7 /target:BusylightRestHost
 - sha1sum BusylightRestHost/bin/Release/BusylightRestHost.exe > BusylightRestHost/bin/Release/BusylightRestHost.exe.sha1
-- mv BusylightRestHost/bin/Release/BusylightRestHost.exe BusylightRestHost/bin/Release/BusylightRestHost-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.exe
-- mv BusylightRestHost/bin/Release/BusylightRestHost.exe.sha1 BusylightRestHost/bin/Release/BusylightRestHost-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.exe.sha1
-  
+
 deploy:
   provider: releases
   api_key:
     secure: eyaqBaW3BIriNhAfuN2X3I3Wys5UFUGU+MRLIL7Wvy2q9TsbFLoR9WpOeR408mimnyWZuDfoGqDYx+N8lbLbC8Icqz7lAi3+THrxDd8IdX/6GcECrfcqSPVuhCwOp1DzSMHU36dK30A21ISuI9g3/B97umkscfKgq2bGdY6VaGB0RcWkrBUF2Jd8FwlDEw7399/g8a+7ym2lu1rnsvyIqNgKyz71ab1CZXSvAQGL6zswVyGPYMN+6/TI25UzXyTHTqdzLJV7YszZErWY1qnEHm3TGp0VFJc+9kvpNaSrJpqqgR+zlECFxLLFlOzQudhFs/kJezkarsGBZK/jmTpU0VFw72ulLUXCk9brZnBKzl70+2N4sGQtFUanI7pM8Zm1tgPl4Vfb5X9wDXry8jI+Q57KzKqupDfjd+84dseDMrVj2OobeW6eOCbDBeQL3uTtcqoiXwVhTpyH4TxeGh+8YOU4o8OVmj/rlzoWd/qjDuktsdD2ZpPW1wlBZK4UhmmVCZz+xMoXFz5xC68VfrUDf/q564yklpt0dchcdvh2qYRFAXDCOLEdrQ0NckU0r8CM6/zlbFrQalS8A9PIYuM0qSs55Zxm271wc49aJgFsCOgD2e1rHzVNQBeyD+VLP33X6cI6wCj7I62ndnCW1pDrls73iaup2scAoBI7GpA1BPI=
   file:
-    - BusylightRestHost/bin/Release/BusylightRestHost-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.exe
-    - BusylightRestHost/bin/Release/BusylightRestHost-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.exe.sha1
+    - BusylightRestHost/bin/Release/BusylightRestHost.exe
+    - BusylightRestHost/bin/Release/BusylightRestHost.exe.sha1
   skip_cleanup: true
   on:
     repo: thuliumcc/busylight-rest-host
